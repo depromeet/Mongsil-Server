@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/test', (req,res) => {
-    res.send('success')
+    res.send('success test')
 })
 
 app.listen(80, function () {
