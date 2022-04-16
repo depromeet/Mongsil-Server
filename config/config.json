@@ -1,19 +1,23 @@
 {
-  "extends": "standard",
-  "rules": {
-      "indent": [
-          "error",
-          4
-      ],
-      "semi": [
-          "error",
-          "always"
-      ],
-      "no-trailing-spaces": 0,
-      "keyword-spacing": 0,
-      "no-unused-vars": 1,
-      "no-multiple-empty-lines": 0,
-      "space-before-function-paren": 0,
-      "eol-last": 0
+    "development": {       
+      "username": "root",   
+      "password": null,  
+      "database": "mongsil", 
+      "host": "15.164.165.143",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "root",
+      "password": null,
+      "database": "database_test",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "root",
+      "password": null,
+      "database": "database_production",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    }
   }
-}
