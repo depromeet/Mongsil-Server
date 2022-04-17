@@ -24,6 +24,16 @@ class Category extends Sequelize.Model{
       tableName:'category',
     });
   }
+  static associate(db){
+    db.User.HasMany(db.DreamCategory, {
+      foreignKey: 'categoryId',
+      sourceKey: 'id'
+    }),
+    db.User.HasMany(db.DreamCardCategory, {
+      foreignKey: 'categoryId',
+      sourceKey: 'id'
+    })
+  }
 }
 
 module.exports = Category;

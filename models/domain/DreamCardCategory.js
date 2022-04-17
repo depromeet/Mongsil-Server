@@ -12,7 +12,7 @@ class DreamCardCategory extends Sequelize.Model{
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      dreamId:{
+      categoryId:{
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -23,6 +23,21 @@ class DreamCardCategory extends Sequelize.Model{
       modelName: 'dream_card_category',
       tableName:'dream_card_category',
     });
+  }
+  static associate(db){
+    db.Post.belongsTo(db.DreamCard, {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'dreamCardId',
+      targetKey: 'id'
+    }),
+    
+    db.Post.belongsTo(db.Category, {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'categoryId',
+      targetKey: 'id'
+    })
   }
 }
 

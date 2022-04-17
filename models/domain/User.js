@@ -36,7 +36,7 @@ class User extends Sequelize.Model{
       foreignKey: 'userId',
       sourceKey: 'id'
     }),
-    db.User.HasMany(db.UserDreasm, {
+    db.User.HasMany(db.UserDream, {
       foreignKey: 'userId',
       sourceKey: 'id'
     })

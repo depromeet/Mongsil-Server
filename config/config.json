@@ -3,7 +3,7 @@
       "username": "root",   
       "password": null,  
       "database": "mongsil", 
-      "host": "15.164.165.143",
+      "host": "3.34.46.139",
       "dialect": "mysql"
     },
     "test": {

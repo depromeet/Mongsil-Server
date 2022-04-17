@@ -24,6 +24,22 @@ class UserDream extends Sequelize.Model{
       tableName:'user_dream',
     });
   }
+
+  static associate(db){
+    db.Post.belongsTo(db.User, {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'userId',
+      targetKey: 'id'
+    }),
+    
+    db.Post.belongsTo(db.Dream, {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'dreamId',
+      targetKey: 'id'
+    })
+  }
 }
 
 module.exports = UserDream;

@@ -24,6 +24,22 @@ class DreamCategory extends Sequelize.Model{
       tableName:'dream_category',
     });
   }
+  
+  static associate(db){
+    db.Post.belongsTo(db.Category, {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'categoryId',
+      targetKey: 'id'
+    }),
+    
+    db.Post.belongsTo(db.Dream, {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'dreamId',
+      targetKey: 'id'
+    })
+  }
 }
 
 module.exports = DreamCategory;

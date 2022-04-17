@@ -26,6 +26,11 @@ class DreamCard extends Sequelize.Model{
   }
 
   static associate(db){
+    db.User.HasMany(db.DreamCardCategory, {
+      foreignKey: 'dreamCardId',
+      sourceKey: 'id'
+    }),
+
     db.Post.belongsTo(db.User, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
