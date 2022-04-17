@@ -6,7 +6,8 @@ class DreamCategory extends Sequelize.Model{
       id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
       },
       categoryId:{
         type: Sequelize.INTEGER,
@@ -26,14 +27,14 @@ class DreamCategory extends Sequelize.Model{
   }
   
   static associate(db){
-    db.Post.belongsTo(db.Category, {
+    db.DreamCategory.belongsTo(db.Category, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'categoryId',
       targetKey: 'id'
     }),
     
-    db.Post.belongsTo(db.Dream, {
+    db.DreamCategory.belongsTo(db.Dream, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'dreamId',

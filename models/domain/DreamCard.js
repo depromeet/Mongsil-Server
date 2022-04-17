@@ -6,7 +6,8 @@ class DreamCard extends Sequelize.Model{
       id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -26,12 +27,12 @@ class DreamCard extends Sequelize.Model{
   }
 
   static associate(db){
-    db.User.HasMany(db.DreamCardCategory, {
+    db.User.hasMany(db.DreamCardCategory, {
       foreignKey: 'dreamCardId',
       sourceKey: 'id'
     }),
 
-    db.Post.belongsTo(db.User, {
+    db.DreamCard.belongsTo(db.User, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'userId',

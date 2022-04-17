@@ -6,7 +6,8 @@ class UserDream extends Sequelize.Model{
       id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
       },
       userId:{
         type: Sequelize.INTEGER,
@@ -26,14 +27,14 @@ class UserDream extends Sequelize.Model{
   }
 
   static associate(db){
-    db.Post.belongsTo(db.User, {
+    db.UserDream.belongsTo(db.User, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'userId',
       targetKey: 'id'
     }),
     
-    db.Post.belongsTo(db.Dream, {
+    db.UserDream.belongsTo(db.Dream, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'dreamId',

@@ -6,7 +6,8 @@ class Category extends Sequelize.Model{
       id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
       },
       name: {
         type: Sequelize.STRING(20),
@@ -25,11 +26,11 @@ class Category extends Sequelize.Model{
     });
   }
   static associate(db){
-    db.User.HasMany(db.DreamCategory, {
+    db.User.hasMany(db.DreamCategory, {
       foreignKey: 'categoryId',
       sourceKey: 'id'
     }),
-    db.User.HasMany(db.DreamCardCategory, {
+    db.User.hasMany(db.DreamCardCategory, {
       foreignKey: 'categoryId',
       sourceKey: 'id'
     })

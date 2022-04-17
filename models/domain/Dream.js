@@ -6,7 +6,8 @@ class Dream extends Sequelize.Model{
       id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
       },
       title: {
         type: Sequelize.STRING(20),
@@ -26,11 +27,11 @@ class Dream extends Sequelize.Model{
   }
 
   static associate(db){
-    db.User.HasMany(db.DreamCategory, {
+    db.User.hasMany(db.DreamCategory, {
       foreignKey: 'dreamId',
       sourceKey: 'id'
     }),
-    db.User.HasMany(db.UserDream, {
+    db.User.hasMany(db.UserDream, {
       foreignKey: 'dreamId',
       sourceKey: 'id'
     })
