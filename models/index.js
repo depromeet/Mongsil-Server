@@ -1,36 +1,43 @@
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
 const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + '/../config/config.json')[env];
+const User = require('./domain/User')
+const UserDream = require('./domain/UserDream')
+const Dream = require('./domain/User')
+const DreamCard = require('./domain/DreamCard')
+const DreamCardCategory = require('./domain/DreamCardCategory')
+const Category = require('./domain/Category')
+const DreamCategory = require('./domain/DreamCategory')
+
+const env = process.env.NODE_ENV || 'development';
+const config = require("../config/config.json")[env]
 const db = {};
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
+const sequelize = new Sequelize(config.database, config.username, config.password, config)
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+
+// // DB N:N 관계 정보
+// db.User.hasmany(db.UserDream, {through: 'UserDream'});
+
+db.User = User;
+db.UserDream = UserDream;
+db.Dream = Dream;
+db.DreamCard = DreamCard;
+db.DreamCardCategory = DreamCardCategory;
+db.Category = Category;
+db.DreamCategory = DreamCategory;
+
+User.init(sequelize);
+UserDream.init(sequelize);
+Dream.init(sequelize);
+DreamCard.init(sequelize);
+DreamCardCategory.init(sequelize);
+Category.init(sequelize);
+DreamCategory.init(sequelize);
+
+User.associate(db);
+UserDream.associate(db);
+Dream.associate(db);
+DreamCard.associate(db);
+DreamCardCategory.associate(db);
+Category.associate(db);
+DreamCategory.associate(db);
 
 module.exports = db;
