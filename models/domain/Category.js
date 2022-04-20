@@ -23,6 +23,7 @@ class Category extends Sequelize.Model{
       charset:'utf8',
       modelName: 'category',
       tableName:'category',
+      timestamps: false
     });
   }
   static associate(db){

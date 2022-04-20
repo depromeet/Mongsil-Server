@@ -1,7 +1,7 @@
 const express = require('express');
-const path = require('path');
 const morgan = require('morgan');
 const {sequelize} = require("./models");
+const UserRouter = require('./routes/UserRoute')
 const app = express();
 app.set('port', process.env.PORT || 3000);
 
@@ -15,13 +15,16 @@ sequelize
   });
 
 app.use(morgan('dev'));
-// app.use(express.static(path.join(__dirname, 'public'))); // 요청시 기본 경로 설정
 app.use(express.json()); // json 파싱
 app.use(express.urlencoded({ extended: false })); // uri 파싱
 
-app.use('/test', function(req,res){
+app.use('/test', function(req, res){
   res.send("test");
 })
+
+app.use('/user', UserRouter)
+
+
 
 
 app.use((req, res, next) => {

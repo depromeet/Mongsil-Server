@@ -23,6 +23,7 @@ class DreamCategory extends Sequelize.Model{
       charset:'utf8',
       modelName: 'dream_category',
       tableName:'dream_category',
+      timestamps: false
     });
   }
   
