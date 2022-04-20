@@ -23,6 +23,7 @@ class Dream extends Sequelize.Model{
       charset:'utf8',
       modelName: 'dream',
       tableName:'dream',
+      timestamps: false
     });
   }
 

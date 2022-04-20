@@ -23,6 +23,7 @@ class DreamCardCategory extends Sequelize.Model{
       charset:'utf8',
       modelName: 'dream_card_category',
       tableName:'dream_card_category',
+      timestamps: false
     });
   }
   static associate(db){
