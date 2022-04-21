@@ -7,7 +7,8 @@ class User extends Sequelize.Model{
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true,
       },
       name: {
         type: Sequelize.STRING(20),
@@ -21,7 +22,7 @@ class User extends Sequelize.Model{
       status: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: false,
+        defaultValue: '유효',
       }
     },
     {

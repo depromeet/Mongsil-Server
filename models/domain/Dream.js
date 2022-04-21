@@ -7,7 +7,8 @@ class Dream extends Sequelize.Model{
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true,
       },
       title: {
         type: Sequelize.STRING(20),

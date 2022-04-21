@@ -7,7 +7,8 @@ class DreamCategory extends Sequelize.Model{
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true,
       },
       categoryId:{
         type: Sequelize.INTEGER,
