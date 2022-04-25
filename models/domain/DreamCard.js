@@ -1,45 +1,47 @@
 const Sequelize = require('sequelize');
 
-class DreamCard extends Sequelize.Model{
-  static init(sequelize){
-    return super.init({
-      id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        primaryKey: true,
-        autoIncrement: true,
+class DreamCard extends Sequelize.Model {
+  static init(sequelize) {
+    return super.init(
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          unique: true,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        userId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        description: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+        },
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      description:{
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      charset:'utf8',
-      modelName: 'dream_card',
-      tableName:'dream_card',
-      timestamps: false
-    });
+      {
+        sequelize,
+        charset: 'utf8',
+        modelName: 'dream_card',
+        tableName: 'dream_card',
+        timestamps: false,
+        underscored: true,
+      }
+    );
   }
 
-  static associate(db){
-    db.User.hasMany(db.DreamCardCategory, {
+  static associate(db) {
+    db.DreamCard.hasMany(db.DreamCardCategory, {
       foreignKey: 'dreamCardId',
-      sourceKey: 'id'
+      sourceKey: 'id',
     }),
-
-    db.DreamCard.belongsTo(db.User, {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-      foreignKey: 'userId',
-      targetKey: 'id'
-    })
+      db.DreamCard.belongsTo(db.User, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        foreignKey: 'userId',
+        targetKey: 'id',
+      });
   }
 }
 

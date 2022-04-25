@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-class Dream extends Sequelize.Model {
+class BigCategory extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -11,35 +11,27 @@ class Dream extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        title: {
+        name: {
           type: Sequelize.STRING(20),
-          allowNull: false,
-        },
-        description: {
-          type: Sequelize.TEXT,
           allowNull: false,
         },
       },
       {
         sequelize,
         charset: 'utf8',
-        modelName: 'dream',
-        tableName: 'dream',
+        modelName: 'big_category',
+        tableName: 'big_category',
         timestamps: false,
+        underscored: true,
       }
     );
   }
-
   static associate(db) {
-    db.Dream.hasMany(db.DreamCategory, {
-      foreignKey: 'dreamId',
+    db.BigCategory.hasMany(db.Category, {
+      foreignKey: 'bigCategoryId',
       sourceKey: 'id',
-    }),
-      db.Dream.hasMany(db.UserDream, {
-        foreignKey: 'dreamId',
-        sourceKey: 'id',
-      });
+    });
   }
 }
 
-module.exports = Dream;
+module.exports = BigCategory;

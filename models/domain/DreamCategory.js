@@ -1,47 +1,49 @@
 const Sequelize = require('sequelize');
 
-class DreamCategory extends Sequelize.Model{
-  static init(sequelize){
-    return super.init({
-      id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        primaryKey: true,
-        autoIncrement: true,
+class DreamCategory extends Sequelize.Model {
+  static init(sequelize) {
+    return super.init(
+      {
+        id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          unique: true,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        categoryId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        dreamId: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
       },
-      categoryId:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      dreamId:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      charset:'utf8',
-      modelName: 'dream_category',
-      tableName:'dream_category',
-      timestamps: false
-    });
+      {
+        sequelize,
+        charset: 'utf8',
+        modelName: 'dream_category',
+        tableName: 'dream_category',
+        timestamps: false,
+        underscored: true,
+      }
+    );
   }
-  
-  static associate(db){
+
+  static associate(db) {
     db.DreamCategory.belongsTo(db.Category, {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'categoryId',
-      targetKey: 'id'
+      targetKey: 'id',
     }),
-    
-    db.DreamCategory.belongsTo(db.Dream, {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-      foreignKey: 'dreamId',
-      targetKey: 'id'
-    })
+      db.DreamCategory.belongsTo(db.Dream, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        foreignKey: 'dreamId',
+        targetKey: 'id',
+      });
   }
 }
 
