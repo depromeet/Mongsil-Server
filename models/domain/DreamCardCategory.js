@@ -35,13 +35,13 @@ class DreamCardCategory extends Sequelize.Model {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'dreamCardId',
-      targetKey: 'id',
+      sourceKey: 'id',
     }),
       db.DreamCardCategory.belongsTo(db.Category, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         foreignKey: 'categoryId',
-        targetKey: 'id',
+        sourceKey: 'id',
       });
   }
 }

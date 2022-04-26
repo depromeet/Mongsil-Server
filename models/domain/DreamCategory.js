@@ -36,13 +36,13 @@ class DreamCategory extends Sequelize.Model {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'categoryId',
-      targetKey: 'id',
+      sourceKey: 'id',
     }),
       db.DreamCategory.belongsTo(db.Dream, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         foreignKey: 'dreamId',
-        targetKey: 'id',
+        sourceKey: 'id',
       });
   }
 }

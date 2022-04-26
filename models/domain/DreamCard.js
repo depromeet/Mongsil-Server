@@ -15,6 +15,10 @@ class DreamCard extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
+        title: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+        },
         description: {
           type: Sequelize.TEXT,
           allowNull: false,
@@ -40,7 +44,7 @@ class DreamCard extends Sequelize.Model {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         foreignKey: 'userId',
-        targetKey: 'id',
+        sourceKey: 'id',
       });
   }
 }

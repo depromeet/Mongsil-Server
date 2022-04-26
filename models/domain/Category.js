@@ -47,7 +47,7 @@ class Category extends Sequelize.Model {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         foreignKey: 'bigCategoryId',
-        targetKey: 'id',
+        sourceKey: 'id',
       });
   }
 }

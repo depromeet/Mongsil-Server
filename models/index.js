@@ -22,6 +22,7 @@ db.BigCategory = BigCategory;
 db.Category = Category;
 db.DreamCategory = DreamCategory;
 
+User.init(sequelize);
 UserDream.init(sequelize);
 Dream.init(sequelize);
 DreamCard.init(sequelize);
@@ -30,12 +31,12 @@ Category.init(sequelize);
 DreamCategory.init(sequelize);
 BigCategory.init(sequelize);
 
-// User.associate(db);
-// UserDream.associate(db);
-// Dream.associate(db);
-// DreamCard.associate(db);
-// DreamCardCategory.associate(db);
-// Category.associate(db);
-// DreamCategory.associate(db);
-// BigCategory.associate(db);
+User.associate(db);
+UserDream.associate(db);
+Dream.associate(db);
+DreamCard.associate(db);
+DreamCardCategory.associate(db);
+Category.associate(db);
+DreamCategory.associate(db);
+BigCategory.associate(db);
 module.exports = db;

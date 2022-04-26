@@ -36,13 +36,13 @@ class UserDream extends Sequelize.Model {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       foreignKey: 'userId',
-      targetKey: 'id',
+      sourceKey: 'id',
     }),
       db.UserDream.belongsTo(db.Dream, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         foreignKey: 'dreamId',
-        targetKey: 'id',
+        sourceKey: 'id',
       });
   }
 }
