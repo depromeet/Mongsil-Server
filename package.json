@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha $(find ./models/service -name '*.spec.js') --recursive -w"
   },
   "repository": {
     "type": "git",
@@ -29,8 +29,10 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
+    "mocha": "^9.2.2",
     "morgan": "^1.10.0",
-    "prettier": "2.6.2"
+    "prettier": "2.6.2",
+    "should": "^13.2.3"
   },
   "description": ""
 }
