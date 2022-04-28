@@ -16,11 +16,11 @@ module.exports = {
         throw new Error(validationValue);
       } else if (UserRepository.findByEmail(userEmail, transaction)) {
         throw new Error('이메일이 중복되었습니다.');
-      } else {
-        const userInfo = await UserRepository.save(userName, userEmail, transaction);
-        await transaction.commit();
-        return userInfo.id;
       }
+
+      const userInfo = await UserRepository.save(userName, userEmail, transaction);
+      await transaction.commit();
+      return userInfo.id;
     } catch (err) {
       console.log(err);
       await transaction.rollback();
