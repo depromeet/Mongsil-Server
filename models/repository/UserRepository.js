@@ -26,4 +26,15 @@ module.exports = {
 
     return user;
   },
+
+  deleteById: async function (userId, transaction) {
+    await Sequelize.User.destroy(
+      {
+        where: {
+          id: userId,
+        },
+      },
+      { transaction: transaction }
+    );
+  },
 };
