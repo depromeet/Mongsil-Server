@@ -20,12 +20,9 @@ app.use(express.urlencoded({ extended: false })); // uri 파싱
 
 app.use('/test', function (req, res) {
   res.send("test");
-})
+});
 
-app.use('/user', UserRouter)
-
-
-
+app.use('/user', UserRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

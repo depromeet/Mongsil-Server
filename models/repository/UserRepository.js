@@ -11,6 +11,7 @@ module.exports = {
       },
       { transaction: transaction }
     );
+
     return user;
   },
   findByEmail: async function (userEmail, transaction) {
@@ -22,6 +23,18 @@ module.exports = {
       },
       { transaction: transaction }
     );
+
     return user;
+  },
+
+  deleteById: async function (userId, transaction) {
+    await Sequelize.User.destroy(
+      {
+        where: {
+          id: userId,
+        },
+      },
+      { transaction: transaction }
+    );
   },
 };

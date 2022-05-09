@@ -46,6 +46,28 @@ class User extends Sequelize.Model {
         sourceKey: 'id',
       });
   }
+
+  constructor(dataValues) {
+    super();
+    this.id = dataValues.id;
+    this.name = dataValues.name;
+    this.email = dataValues.email;
+    this.status = dataValues.status;
+    this.test = 'Test';
+  }
+
+  get id() {
+    return id;
+  }
+  get name() {
+    return name;
+  }
+  get email() {
+    return email;
+  }
+  get status() {
+    return status;
+  }
 }
 
 module.exports = User;
