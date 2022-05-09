@@ -42,6 +42,7 @@ build/Release
 node_modules/
 jspm_packages/
 
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -119,3 +120,4 @@ dist
 
 #보안관련해서..
 package-lock.json
+config/
