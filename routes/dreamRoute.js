@@ -6,7 +6,7 @@ const router = express.Router();
 
 const dreamCtrl = require('../controller/dreamCtrl');
 
-router.get('/filter', dreamCtrl.findAllcategory);
+router.get('/filter', dreamCtrl.findAllCategory);
 // router.get('/filter/result');
 // router.get('/filter/:category');
 

@@ -4,7 +4,7 @@ const Sequelize = require('../index');
 const { Op } = require('sequelize');
 
 module.exports = {
-  findAllcategory: async () => {
+  findAllCategory: async () => {
     try {
       const noun = await Sequelize.BigCategory.findAll({
         attributes: ['name'],
