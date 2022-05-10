@@ -1,9 +1,0 @@
-{
-    "development": {       
-      "username": "root",   
-      "password": null,  
-      "database": "mongsil", 
-      "host": "3.34.46.139",
-      "dialect": "mysql"
-    }
-  }

@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.get('/findAll', UserController.findAllUser);
 router.post('/checkUser', UserController.checkUser);
-router.delete('/expire', UserController.deleteUser);
-router.post('/save', UserController.saveUser);
+router.post('/dropOut', UserController.deleteUser);
+router.post('/signUp', UserController.saveUser);
 module.exports = router;
