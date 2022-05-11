@@ -13,10 +13,15 @@ module.exports = {
             [Op.ne]: '동사/형용사',
           },
         },
+        include: [
+          {
+            model: Sequelize.Category,
+            attributes: ['name'],
+          },
+        ],
       });
       const verbAndAdjective = await Sequelize.Category.findAll({
         attributes: ['name'],
-
         where: {
           bigCategoryId: 4,
         },
