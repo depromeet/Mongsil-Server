@@ -1,7 +1,6 @@
 'use strict';
 
 const dreamRepository = require('../../repository/dreamRepository');
-const { sequelize } = require('../../index');
 
 module.exports = {
   findAllCategory: async () => {
