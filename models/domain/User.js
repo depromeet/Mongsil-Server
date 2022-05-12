@@ -20,11 +20,6 @@ class User extends Sequelize.Model {
           allowNull: false,
           unique: true,
         },
-        status: {
-          type: Sequelize.BOOLEAN,
-          allowNull: false,
-          defaultValue: '유효',
-        },
       },
       {
         sequelize,
@@ -52,7 +47,6 @@ class User extends Sequelize.Model {
     this.id = dataValues.id;
     this.name = dataValues.name;
     this.email = dataValues.email;
-    this.status = dataValues.status;
     this.test = 'Test';
   }
 
@@ -64,9 +58,6 @@ class User extends Sequelize.Model {
   }
   get email() {
     return email;
-  }
-  get status() {
-    return status;
   }
 }
 
