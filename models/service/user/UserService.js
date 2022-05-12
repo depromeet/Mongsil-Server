@@ -1,6 +1,6 @@
-const userRepository = require('../../repository/UserRepository');
-const { sequelize } = require('../../index');
-const UserServiceError = require('../../Error');
+const userRepository = require("../../repository/UserRepository");
+const { sequelize } = require("../../index");
+const UserServiceError = require("../../Error");
 module.exports = {
   allUser: async function () {
     return await userRepository.findAll();
@@ -9,9 +9,13 @@ module.exports = {
     const transaction = await sequelize.transaction();
     try {
       if (await userRepository.findByEmail(userEmail, transaction)) {
-        throw new Error('이메일이 중복되었습니다.');
+        throw new Error("이메일이 중복되었습니다.");
       } else {
-        const userInfo = await userRepository.save(userName, userEmail, transaction);
+        const userInfo = await userRepository.save(
+          userName,
+          userEmail,
+          transaction
+        );
         await transaction.commit();
         return userInfo;
       }

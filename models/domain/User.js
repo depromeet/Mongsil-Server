@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 class User extends Sequelize.Model {
   static init(sequelize) {
@@ -20,17 +20,12 @@ class User extends Sequelize.Model {
           allowNull: false,
           unique: true,
         },
-        status: {
-          type: Sequelize.BOOLEAN,
-          allowNull: false,
-          defaultValue: '유효',
-        },
       },
       {
         sequelize,
-        charset: 'utf8',
-        modelName: 'user',
-        tableName: 'user',
+        charset: "utf8",
+        modelName: "user",
+        tableName: "user",
         timestamps: false,
       }
     );
@@ -38,12 +33,12 @@ class User extends Sequelize.Model {
 
   static associate(db) {
     db.User.hasMany(db.DreamCard, {
-      foreignKey: 'userId',
-      sourceKey: 'id',
+      foreignKey: "userId",
+      sourceKey: "id",
     }),
       db.User.hasMany(db.UserDream, {
-        foreignKey: 'dreamId',
-        sourceKey: 'id',
+        foreignKey: "dreamId",
+        sourceKey: "id",
       });
   }
 
@@ -52,8 +47,6 @@ class User extends Sequelize.Model {
     this.id = dataValues.id;
     this.name = dataValues.name;
     this.email = dataValues.email;
-    this.status = dataValues.status;
-    this.test = 'Test';
   }
 
   get id() {
@@ -64,9 +57,6 @@ class User extends Sequelize.Model {
   }
   get email() {
     return email;
-  }
-  get status() {
-    return status;
   }
 }
 

@@ -1,0 +1,6 @@
+const express = require("express");
+const dreamController = require("../controller/DreamController");
+const router = express.Router();
+
+router.get("/categoryList", dreamController.findAllCategory);
+module.exports = router;
