@@ -47,7 +47,6 @@ class User extends Sequelize.Model {
     this.id = dataValues.id;
     this.name = dataValues.name;
     this.email = dataValues.email;
-    this.test = 'Test';
   }
 
   get id() {
