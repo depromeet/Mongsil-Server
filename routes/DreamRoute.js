@@ -4,13 +4,13 @@ const express = require('express');
 
 const router = express.Router();
 
-const dreamCtrl = require('../controller/DreamController');
+const dreamController = require('../controller/DreamController');
 
-router.get('/filter', dreamCtrl.findAllCategory);
-router.get('/filter/count', dreamCtrl.countDreamFilter);
-router.get('/filter/result', dreamCtrl.findAllDreamFilter);
-router.get('/result/:dreamId', dreamCtrl.findOneDreamById);
-router.get('/search', dreamCtrl.findAllDreamSearch);
-router.get('/popularity', dreamCtrl.findPopularityKeword);
+router.get('/filter', dreamController.findAllCategory);
+router.get('/filter/count', dreamController.countDreamFilter);
+router.get('/filter/result', dreamController.findAllDreamFilter);
+router.get('/result/:dreamId', dreamController.findOneDreamById);
+router.get('/search', dreamController.findAllDreamSearch);
+router.get('/popularity', dreamController.findPopularityKeword);
 
 module.exports = router;
