@@ -2,7 +2,7 @@
 
 const ResponseDto = require('../../../dto/ResponseDto');
 
-const dreamRepository = require('../../repository/dreamRepository');
+const dreamRepository = require('../../repository/DreamRepository');
 
 module.exports = class DreamService {
   constructor(req) {

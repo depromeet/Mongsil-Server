@@ -4,7 +4,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const dreamCtrl = require('../controller/dreamCtrl');
+const dreamCtrl = require('../controller/DreamController');
 
 router.get('/filter', dreamCtrl.findAllCategory);
 router.get('/filter/count', dreamCtrl.countDreamFilter);
