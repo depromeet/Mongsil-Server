@@ -52,7 +52,7 @@ module.exports = {
   findAllCategoryByKeword: async (categoryId) => {
     try {
       const dream = await Sequelize.sequelize.query(`
-        SELECT dream.id, title, description FROM dream
+        SELECT dream.id, title FROM dream
         INNER JOIN dream_category
         ON category_id = ${categoryId}
         WHERE dream.id = dream_category.dream_id
@@ -94,7 +94,7 @@ module.exports = {
   findAllCategorySearchByKeword: async (keword) => {
     try {
       const query =
-        'select * from dream where replace(title," ","") like :searchText or replace(title," ","") like :searchText';
+        'select id, title from dream where replace(title," ","") like :searchText or replace(title," ","") like :searchText ORDER BY id ASC';
 
       const dream = await Sequelize.sequelize.query(query, {
         replacements: { searchText: `%${keword.replace(/ /gi, '%')}%` },
