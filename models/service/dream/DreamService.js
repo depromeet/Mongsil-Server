@@ -197,7 +197,7 @@ module.exports = class DreamService {
         return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
       }
 
-      return new ResponseDto(200, '인기검색어 조회', { dream });
+      return new ResponseDto(200, '꿈 결과 조회', { dream });
     } catch (err) {
       throw err;
     }
