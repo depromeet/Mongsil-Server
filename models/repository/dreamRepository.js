@@ -50,14 +50,34 @@ module.exports = {
 
   findAllCategoryByKeword: async (categoryId) => {
     try {
-      const result = await Sequelize.sequelize.query(`
-        SELECT title, description FROM dream
+      const dream = await Sequelize.sequelize.query(`
+        SELECT dream.id, title, description FROM dream
         INNER JOIN dream_category
         ON category_id = ${categoryId}
-        WHERE dream.id = dream_category.dream_id;
+        WHERE dream.id = dream_category.dream_id
+        ORDER BY dream.id ASC;
         `);
 
-      return result[0];
+      return dream[0];
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  updateOnlyHitByKeword: async (mainKeword = '', subKeword = '') => {
+    try {
+      const isUpdate = await Sequelize.Category.increment(
+        { hit: 1 },
+        {
+          where: {
+            name: {
+              [Op.or]: [mainKeword, subKeword],
+            },
+          },
+        }
+      );
+
+      return isUpdate;
     } catch (err) {
       throw err;
     }
