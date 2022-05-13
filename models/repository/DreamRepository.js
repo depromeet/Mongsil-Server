@@ -5,6 +5,44 @@ const { Op } = require('sequelize');
 const { QueryTypes } = require('sequelize');
 
 module.exports = {
+  findAllNoun: async () => {
+    try {
+      const noun = await Sequelize.BigCategory.findAll({
+        attributes: ['name'],
+        where: {
+          name: {
+            [Op.ne]: '동사/형용사',
+          },
+        },
+        include: [
+          {
+            model: Sequelize.Category,
+            attributes: ['name'],
+          },
+        ],
+      });
+
+      return noun;
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  findAllVerbAndAdjective: async () => {
+    try {
+      const verbAndAdjective = await Sequelize.Category.findAll({
+        attributes: ['name'],
+        where: {
+          bigCategoryId: 4,
+        },
+      });
+
+      return verbAndAdjective;
+    } catch (err) {
+      throw err;
+    }
+  },
+
   findAllCategory: async () => {
     try {
       const noun = await Sequelize.BigCategory.findAll({

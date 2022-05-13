@@ -12,16 +12,18 @@ module.exports = class DreamService {
 
   async findAllCategory() {
     try {
-      const category = await dreamRepository.findAllCategory();
-      const noun = category.noun.map((el) => {
-        return {
-          name: el.name,
-          categories: el.categories.map((category) => category.name),
-        };
-      });
-      const verbAndAdjective = category.verbAndAdjective.map((el) => el.name);
+      const noun = await dreamRepository.findAllNoun();
+      const verbAndAdjective = await dreamRepository.findAllVerbAndAdjective();
 
-      return { noun, verbAndAdjective };
+      return {
+        noun: noun.map((el) => {
+          return {
+            name: el.name,
+            categories: el.categories.map((category) => category.name),
+          };
+        }),
+        verbAndAdjective: verbAndAdjective.map((el) => el.name),
+      };
     } catch (err) {
       throw err;
     }
@@ -38,7 +40,7 @@ module.exports = class DreamService {
     }
 
     try {
-      const { verbAndAdjective } = await dreamRepository.findAllCategory();
+      const verbAndAdjective = await dreamRepository.findAllVerbAndAdjective();
 
       const newVerbAndAdjective = verbAndAdjective.map((category) => {
         return category.dataValues.name;
@@ -98,7 +100,7 @@ module.exports = class DreamService {
     }
 
     try {
-      const { verbAndAdjective } = await dreamRepository.findAllCategory();
+      const verbAndAdjective = await dreamRepository.findAllVerbAndAdjective();
 
       const newVerbAndAdjective = verbAndAdjective.map((category) => {
         return category.dataValues.name;
