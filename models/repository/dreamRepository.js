@@ -65,6 +65,20 @@ module.exports = {
     }
   },
 
+  findPopularityKeword: async () => {
+    try {
+      const categories = await Sequelize.Category.findAll({
+        attributes: ['name'],
+        limit: 8,
+        order: [['hit', 'DESC']],
+      });
+
+      return categories;
+    } catch (err) {
+      throw err;
+    }
+  },
+
   findAllCategorySearchByKeword: async (keword) => {
     try {
       const query =

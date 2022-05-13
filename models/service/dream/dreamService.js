@@ -175,4 +175,16 @@ module.exports = class DreamService {
       throw err;
     }
   }
+
+  async findPopularityKeword() {
+    try {
+      const categories = await dreamRepository.findPopularityKeword();
+
+      return new ResponseDto(200, '인기검색어 조회', {
+        categories: categories.map((el) => el.name),
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
 };

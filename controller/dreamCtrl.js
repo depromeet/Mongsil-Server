@@ -66,4 +66,18 @@ module.exports = {
       res.status(500).json(new DreamServiceError(err.message));
     }
   },
+
+  findPopularityKeword: async (req, res) => {
+    try {
+      const dreamService = new DreamService(req);
+
+      const response = await dreamService.findPopularityKeword();
+
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json(new DreamServiceError(err.message));
+    }
+  },
 };
