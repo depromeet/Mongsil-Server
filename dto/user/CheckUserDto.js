@@ -4,7 +4,7 @@ class CheckUserDto {
   constructor(user) {
     if (user) {
       this.checkValue = true;
-      this.userId = dataValues.id;
+      this.userId = user.dataValues.id;
     } else this.checkValue = false;
   }
 }
