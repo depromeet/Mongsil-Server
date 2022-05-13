@@ -133,16 +133,44 @@ module.exports = class DreamService {
       await dreamRepository.updateOnlyHitByKeword(mainKeword, subKeword);
 
       if (!subKeword) {
-        return new ResponseDto(200, '필터 개수 조회', { dream });
+        return new ResponseDto(200, '필터 결과 조회', { dream });
       }
 
-      return new ResponseDto(200, '필터 개수 조회', {
+      return new ResponseDto(200, '필터 결과 조회', {
         dream: dream.filter((el) => {
           const regex = new RegExp(subKeword);
 
           return regex.test(el.title);
         }),
       });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async findAllDreamSearch() {
+    const keword = this.query.keword;
+
+    try {
+      const categoryId = await dreamRepository.findOneCategoryByKeword(keword);
+
+      if (!categoryId) {
+        const dream = await dreamRepository.findAllCategorySearchByKeword(
+          keword
+        );
+
+        if (!dream.length) {
+          return new ResponseDto(202, '검색 결과가 존재하지 않습니다.');
+        }
+
+        return new ResponseDto(200, '검색 결과 조회.', { dream });
+      }
+
+      const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
+
+      await dreamRepository.updateOnlyHitByKeword(keword);
+
+      return new ResponseDto(200, '검색 결과 조회', { dream });
     } catch (err) {
       throw err;
     }

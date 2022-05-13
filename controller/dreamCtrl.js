@@ -52,4 +52,18 @@ module.exports = {
       res.status(500).json(new DreamServiceError(err.message));
     }
   },
+
+  findAllDreamSearch: async (req, res) => {
+    try {
+      const dreamService = new DreamService(req);
+
+      const response = await dreamService.findAllDreamSearch();
+
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json(new DreamServiceError(err.message));
+    }
+  },
 };

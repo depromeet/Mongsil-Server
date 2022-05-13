@@ -2,6 +2,7 @@
 
 const Sequelize = require('../index');
 const { Op } = require('sequelize');
+const { QueryTypes } = require('sequelize');
 
 module.exports = {
   findAllCategory: async () => {
@@ -59,6 +60,23 @@ module.exports = {
         `);
 
       return dream[0];
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  findAllCategorySearchByKeword: async (keword) => {
+    try {
+      const query =
+        'select * from dream where replace(title," ","") like :searchText or replace(title," ","") like :searchText';
+
+      const dream = await Sequelize.sequelize.query(query, {
+        replacements: { searchText: `%${keword.replace(/ /gi, '%')}%` },
+        type: QueryTypes.SELECT,
+        raw: true,
+      });
+
+      return dream;
     } catch (err) {
       throw err;
     }
