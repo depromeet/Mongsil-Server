@@ -79,6 +79,18 @@ module.exports = {
     }
   },
 
+  findOneDreamById: async (id) => {
+    try {
+      const dream = await Sequelize.Dream.findOne({
+        where: { id },
+      });
+
+      return dream;
+    } catch (err) {
+      throw err;
+    }
+  },
+
   findAllCategorySearchByKeword: async (keword) => {
     try {
       const query =

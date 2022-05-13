@@ -7,6 +7,7 @@ const dreamRepository = require('../../repository/dreamRepository');
 module.exports = class DreamService {
   constructor(req) {
     this.query = req.query;
+    this.params = req.params;
   }
 
   async findAllCategory() {
@@ -183,6 +184,20 @@ module.exports = class DreamService {
       return new ResponseDto(200, '인기검색어 조회', {
         categories: categories.map((el) => el.name),
       });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async findOneDreamById() {
+    try {
+      const dream = await dreamRepository.findOneDreamById(this.params.dreamId);
+
+      if (!dream) {
+        return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
+      }
+
+      return new ResponseDto(200, '인기검색어 조회', { dream });
     } catch (err) {
       throw err;
     }

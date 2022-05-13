@@ -80,4 +80,18 @@ module.exports = {
       res.status(500).json(new DreamServiceError(err.message));
     }
   },
+
+  findOneDreamById: async (req, res) => {
+    try {
+      const dreamService = new DreamService(req);
+
+      const response = await dreamService.findOneDreamById();
+
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json(new DreamServiceError(err.message));
+    }
+  },
 };
