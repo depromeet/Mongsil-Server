@@ -20,7 +20,7 @@ app.use(express.json()); // json 파싱
 app.use(express.urlencoded({ extended: false })); // uri 파싱
 
 app.use('/test', function (req, res) {
-  res.send('test');
+  res.send('success');
 });
 
 app.use('/user', UserRouter);
