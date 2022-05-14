@@ -23,6 +23,11 @@ class Category extends Sequelize.Model {
           type: Sequelize.STRING(40),
           allowNull: true,
         },
+        hit: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          defaultValue: 0,
+        },
       },
       {
         sequelize,
