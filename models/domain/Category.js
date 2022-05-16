@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 class Category extends Sequelize.Model {
   static init(sequelize) {
@@ -23,12 +23,16 @@ class Category extends Sequelize.Model {
           type: Sequelize.STRING(40),
           allowNull: true,
         },
+        hit: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+        },
       },
       {
         sequelize,
-        charset: 'utf8',
-        modelName: 'category',
-        tableName: 'category',
+        charset: "utf8",
+        modelName: "category",
+        tableName: "category",
         timestamps: false,
         underscored: true,
       }
@@ -36,18 +40,18 @@ class Category extends Sequelize.Model {
   }
   static associate(db) {
     db.Category.hasMany(db.DreamCategory, {
-      foreignKey: 'categoryId',
-      sourceKey: 'id',
+      foreignKey: "categoryId",
+      sourceKey: "id",
     }),
       db.Category.hasMany(db.DreamCardCategory, {
-        foreignKey: 'categoryId',
-        sourceKey: 'id',
+        foreignKey: "categoryId",
+        sourceKey: "id",
       }),
       db.Category.belongsTo(db.BigCategory, {
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        foreignKey: 'bigCategoryId',
-        sourceKey: 'id',
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+        foreignKey: "bigCategoryId",
+        sourceKey: "id",
       });
   }
 }
