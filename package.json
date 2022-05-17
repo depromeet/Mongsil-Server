@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
+    "dev": "nodemon ./main.js",
     "test": "mocha $(find ./models/service -name '*.spec.js') --recursive -w"
   },
   "repository": {
@@ -19,6 +20,7 @@
     "express": "^4.17.3",
     "moment": "^2.29.3",
     "mysql2": "^2.3.3",
+    "nodemon": "^2.0.16",
     "pm2": "^5.2.0",
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1"

@@ -25,12 +25,13 @@ class Category extends Sequelize.Model {
         },
         hit: {
           type: Sequelize.INTEGER,
+          allowNull: false,
           defaultValue: 0,
         },
       },
       {
         sequelize,
-        charset: "utf8",
+        charset: "utf8mb4",
         modelName: "category",
         tableName: "category",
         timestamps: false,
