@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 
 class BigCategory extends Sequelize.Model {
   static init(sequelize) {
@@ -18,9 +18,9 @@ class BigCategory extends Sequelize.Model {
       },
       {
         sequelize,
-        charset: 'utf8',
-        modelName: 'big_category',
-        tableName: 'big_category',
+        charset: "utf8mb4",
+        modelName: "big_category",
+        tableName: "big_category",
         timestamps: false,
         underscored: true,
       }
@@ -28,8 +28,8 @@ class BigCategory extends Sequelize.Model {
   }
   static associate(db) {
     db.BigCategory.hasMany(db.Category, {
-      foreignKey: 'bigCategoryId',
-      sourceKey: 'id',
+      foreignKey: "bigCategoryId",
+      sourceKey: "id",
     });
   }
 }
