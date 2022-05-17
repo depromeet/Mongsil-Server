@@ -57,7 +57,7 @@ module.exports = {
         dreamId,
         transaction
       );
-      if (saveDreamInfo) {
+      if (saveDreamInfo.length !== 0) {
         throw new UserServiceError("이미 저장된 해몽 카드입니다.");
       }
       await userDreamRepository.save(userId, dreamId, transaction);
@@ -71,11 +71,19 @@ module.exports = {
   getAllSaveDream: async function (userId, date) {
     const transaction = await sequelize.transaction();
     try {
-      return await userDreamRepository.findByUserIdAndDate(
-        userId,
-        date,
-        transaction
-      );
+      return await userDreamRepository.findByUserId(userId, transaction);
+    } catch (err) {
+      console.log(err);
+      await transaction.rollback();
+      throw new UserServiceError(err.message);
+    }
+  },
+  deleteUserDream: async function (idList) {
+    const transaction = await sequelize.transaction();
+    try {
+      for (let id of idList) {
+        await userDreamRepository.deleteByid(id, transaction);
+      }
     } catch (err) {
       console.log(err);
       await transaction.rollback();

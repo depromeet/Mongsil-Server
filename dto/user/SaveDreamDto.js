@@ -2,7 +2,6 @@ class SaveDreamDto {
   size;
   dreamList;
   constructor(dreamInfo) {
-    this.size = dreamInfo.length;
     this.dreamList = this.getDreamList(dreamInfo);
   }
   getDreamList(dreamInfo) {
@@ -37,7 +36,6 @@ class DreamList {
   getCategoryList(categoryInfo) {
     let result = [];
     for (let category of categoryInfo) {
-      console.log(category);
       let temp = new CategoryList(category.dataValues);
       result.push(temp);
     }
@@ -51,7 +49,7 @@ class CategoryList {
   image;
   constructor(category) {
     console.log(category);
-    this.categoryId = category.id;
+    this.categoryId = String(category.id);
     this.name = category.category.dataValues.name;
     this.image = category.category.dataValues.image;
   }

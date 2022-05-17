@@ -60,13 +60,19 @@ module.exports = {
   },
   getSaveDreamList: async function (req, res) {
     try {
-      const dreamInfo = await userService.getAllSaveDream(
-        req.body.userId,
-        req.body.date
-      );
+      const dreamInfo = await userService.getAllSaveDream(req.body.userId);
       res
         .status(200)
         .send(new ResponseDto(200, "success", new SaveDreamDto(dreamInfo)));
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(new UserServiceError(err.message));
+    }
+  },
+  deleteUserDream: async function (req, res) {
+    try {
+      await userService.deleteUserDream(req.body.dreamIdList);
+      res.status(200).send(new ResponseDto(200, "해몽 카드 삭제 완료"));
     } catch (err) {
       console.log(err);
       res.status(500).send(new UserServiceError(err.message));

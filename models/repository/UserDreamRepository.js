@@ -22,8 +22,7 @@ module.exports = {
       }
     );
   },
-  findByUserIdAndDate: async function (userId, date, transaction) {
-    console.log(moment(date).format("YYYY-MM-DD"));
+  findByUserId: async function (userId, transaction) {
     return await Sequelize.UserDream.findAll(
       {
         include: {
@@ -37,9 +36,20 @@ module.exports = {
         },
         where: {
           userId: userId,
-          // registerDate: { [Op.eq]: moment(date).format("YYYY-MM-DD") },
         },
         order: [["registerDate", "desc"]],
+      },
+      {
+        transaction: transaction,
+      }
+    );
+  },
+  deleteByid: async function (id, transaction) {
+    return await Sequelize.UserDream.destroy(
+      {
+        where: {
+          id: id,
+        },
       },
       {
         transaction: transaction,

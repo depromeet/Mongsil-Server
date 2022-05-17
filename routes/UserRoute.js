@@ -5,8 +5,9 @@ const router = express.Router();
 
 router.get("/findAll", UserController.findAllUser);
 router.post("/checkUser", UserController.checkUser);
-router.post("/dropout", UserController.deleteUser);
+router.delete("/dropout", UserController.deleteUser);
 router.post("/signUp", UserController.saveUser);
 router.post("/saveDream", UserController.saveDream);
 router.post("/dreamList", UserController.getSaveDreamList);
+router.delete("/dreamList", UserController.deleteUserDream);
 module.exports = router;
