@@ -19,10 +19,13 @@ class UserDream extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
+        registerDate: {
+          type: Sequelize.DATE,
+        },
       },
       {
         sequelize,
-        charset: 'utf8',
+        charset: 'utf8mb4',
         modelName: 'user_dream',
         tableName: 'user_dream',
         timestamps: false,

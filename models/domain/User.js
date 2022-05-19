@@ -1,3 +1,4 @@
+const { now } = require('lodash');
 const Sequelize = require('sequelize');
 
 class User extends Sequelize.Model {
@@ -20,10 +21,14 @@ class User extends Sequelize.Model {
           allowNull: false,
           unique: true,
         },
+        registerDate: {
+          type: Sequelize.DATEONLY,
+          allowNull: false,
+        },
       },
       {
         sequelize,
-        charset: 'utf8',
+        charset: 'utf8mb4',
         modelName: 'user',
         tableName: 'user',
         timestamps: false,

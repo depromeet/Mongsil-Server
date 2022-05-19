@@ -22,7 +22,7 @@ class DreamCardCategory extends Sequelize.Model {
       },
       {
         sequelize,
-        charset: 'utf8',
+        charset: 'utf8mb4',
         modelName: 'dream_card_category',
         tableName: 'dream_card_category',
         timestamps: false,
