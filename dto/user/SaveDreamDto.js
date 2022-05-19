@@ -5,10 +5,10 @@ class SaveDreamDto {
     this.dreamList = this.getDreamList(dreamInfo);
   }
   getDreamList(dreamInfo) {
-    let result = [];
+    const result = [];
 
-    for (let dream of dreamInfo) {
-      let temp = new DreamList(dream.dataValues);
+    for (const dream of dreamInfo) {
+      const temp = new DreamList(dream.dataValues);
       result.push(temp);
     }
     return result;

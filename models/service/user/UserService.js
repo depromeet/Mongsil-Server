@@ -1,7 +1,7 @@
-const userRepository = require("../../repository/UserRepository");
-const userDreamRepository = require("../../repository/UserDreamRepository");
-const { sequelize, User } = require("../../index");
-const UserServiceError = require("../../Error");
+const userRepository = require('../../repository/UserRepository');
+const userDreamRepository = require('../../repository/UserDreamRepository');
+const { sequelize, User } = require('../../index');
+const UserServiceError = require('../../Error');
 module.exports = {
   allUser: async function () {
     return await userRepository.findAll();
@@ -10,7 +10,8 @@ module.exports = {
     const transaction = await sequelize.transaction();
     try {
       if (await userRepository.findByEmail(userEmail, transaction)) {
-        throw new Error("이메일이 중복되었습니다.");
+        await transaction.rollback();
+        throw new Error('이메일이 중복되었습니다.');
       } else {
         const userInfo = await userRepository.save(
           userName,
@@ -58,7 +59,8 @@ module.exports = {
         transaction
       );
       if (saveDreamInfo.length !== 0) {
-        throw new UserServiceError("이미 저장된 해몽 카드입니다.");
+        await transaction.rollback();
+        throw new UserServiceError('이미 저장된 해몽 카드입니다.');
       }
       await userDreamRepository.save(userId, dreamId, transaction);
       await transaction.commit();
@@ -84,6 +86,7 @@ module.exports = {
       for (let id of idList) {
         await userDreamRepository.deleteByid(id, transaction);
       }
+      await transaction.commit();
     } catch (err) {
       console.log(err);
       await transaction.rollback();
