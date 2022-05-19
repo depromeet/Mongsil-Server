@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
 class UserDream extends Sequelize.Model {
   static init(sequelize) {
@@ -25,9 +25,9 @@ class UserDream extends Sequelize.Model {
       },
       {
         sequelize,
-        charset: "utf8mb4",
-        modelName: "user_dream",
-        tableName: "user_dream",
+        charset: 'utf8mb4',
+        modelName: 'user_dream',
+        tableName: 'user_dream',
         timestamps: false,
         underscored: true,
       }
@@ -36,16 +36,16 @@ class UserDream extends Sequelize.Model {
 
   static associate(db) {
     db.UserDream.belongsTo(db.User, {
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
-      foreignKey: "userId",
-      sourceKey: "id",
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      foreignKey: 'userId',
+      sourceKey: 'id',
     }),
       db.UserDream.belongsTo(db.Dream, {
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-        foreignKey: "dreamId",
-        sourceKey: "id",
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        foreignKey: 'dreamId',
+        sourceKey: 'id',
       });
   }
 }

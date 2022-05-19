@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
 class Dream extends Sequelize.Model {
   static init(sequelize) {
@@ -22,9 +22,9 @@ class Dream extends Sequelize.Model {
       },
       {
         sequelize,
-        charset: "utf8mb4",
-        modelName: "dream",
-        tableName: "dream",
+        charset: 'utf8mb4',
+        modelName: 'dream',
+        tableName: 'dream',
         timestamps: false,
       }
     );
@@ -32,12 +32,12 @@ class Dream extends Sequelize.Model {
 
   static associate(db) {
     db.Dream.hasMany(db.DreamCategory, {
-      foreignKey: "dreamId",
-      sourceKey: "id",
+      foreignKey: 'dreamId',
+      sourceKey: 'id',
     }),
       db.Dream.hasMany(db.UserDream, {
-        foreignKey: "dreamId",
-        sourceKey: "id",
+        foreignKey: 'dreamId',
+        sourceKey: 'id',
       });
   }
 }
