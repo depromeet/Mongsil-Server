@@ -34,9 +34,9 @@ class DreamList {
   }
 
   getCategoryList(categoryInfo) {
-    let result = [];
-    for (let category of categoryInfo) {
-      let temp = new CategoryList(category.dataValues);
+    const result = [];
+    for (const category of categoryInfo) {
+      const temp = new CategoryList(category.dataValues);
       result.push(temp);
     }
     return result;
@@ -48,7 +48,6 @@ class CategoryList {
   name;
   image;
   constructor(category) {
-    console.log(category);
     this.categoryId = String(category.id);
     this.name = category.category.dataValues.name;
     this.image = category.category.dataValues.image;
