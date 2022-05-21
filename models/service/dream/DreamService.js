@@ -165,6 +165,7 @@ module.exports = class DreamService {
       }
 
       const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
+      dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
 
       await dreamRepository.updateOnlyHitByKeword(mainKeword, subKeword);
 
@@ -194,6 +195,7 @@ module.exports = class DreamService {
         const dream = await dreamRepository.findAllCategorySearchByKeword(
           keword
         );
+        dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
 
         if (!dream.length) {
           return new ResponseDto(202, '검색 결과가 존재하지 않습니다.');
@@ -203,6 +205,7 @@ module.exports = class DreamService {
       }
 
       const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
+      dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
 
       await dreamRepository.updateOnlyHitByKeword(keword);
 
@@ -231,6 +234,7 @@ module.exports = class DreamService {
       if (!dream) {
         return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
       }
+      dream.dataValues.id = String(dream.dataValues.id);
 
       return new ResponseDto(200, '꿈 결과 조회', { dream });
     } catch (err) {
