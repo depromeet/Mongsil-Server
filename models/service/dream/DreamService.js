@@ -1,5 +1,7 @@
 'use strict';
 
+const hangul = require('hangul-js');
+
 const ResponseDto = require('../../../dto/ResponseDto');
 
 const dreamRepository = require('../../repository/DreamRepository');
@@ -11,9 +13,40 @@ module.exports = class DreamService {
   }
 
   async findAllCategory() {
+    const hangulMap = {
+      ㄲ: 'ㄱ',
+      ㄸ: 'ㄷ',
+      ㅃ: 'ㅂ',
+      ㅆ: 'ㅅ',
+      ㅉ: 'ㅈ',
+    };
+
     try {
       const noun = await dreamRepository.findAllNoun();
       const verbAndAdjective = await dreamRepository.findAllVerbAndAdjective();
+
+      const consonants = [];
+      const newVerbAndAdjective = [];
+
+      verbAndAdjective.forEach((el) => {
+        let consonant = hangul.disassemble(el.name)[0];
+
+        if (hangulMap[consonant]) {
+          consonant = hangulMap[consonant];
+        }
+
+        const idx = consonants.indexOf(consonant);
+
+        if (idx === -1) {
+          newVerbAndAdjective.push({
+            name: consonant,
+            categories: [el.name],
+          });
+          consonants.push(consonant);
+        } else {
+          newVerbAndAdjective[idx].categories.push(el.name);
+        }
+      });
 
       return {
         noun: noun.map((el) => {
@@ -22,7 +55,7 @@ module.exports = class DreamService {
             categories: el.categories.map((category) => category.name),
           };
         }),
-        verbAndAdjective: verbAndAdjective.map((el) => el.name),
+        verbAndAdjective: newVerbAndAdjective,
       };
     } catch (err) {
       throw err;

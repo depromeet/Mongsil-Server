@@ -10,7 +10,12 @@ const Category = require('./domain/Category');
 const DreamCategory = require('./domain/DreamCategory');
 const BigCategory = require('./domain/BigCategory');
 const db = {};
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 db.sequelize = sequelize;
 
 db.User = User;
