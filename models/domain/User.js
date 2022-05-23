@@ -23,7 +23,6 @@ class User extends Sequelize.Model {
         },
         registerDate: {
           type: Sequelize.DATEONLY,
-          allowNull: false,
         },
       },
       {
@@ -32,6 +31,7 @@ class User extends Sequelize.Model {
         modelName: 'user',
         tableName: 'user',
         timestamps: false,
+        underscored: true,
       }
     );
   }
