@@ -1,9 +1,9 @@
-const userService = require("../models/service/user/UserService");
-const validation = require("../libs/validations");
-const ResponseDto = require("../dto/ResponseDto");
-const CheckUserDto = require("../dto/user/CheckUserDto");
-const UserServiceError = require("../models/Error");
-const SaveDreamDto = require("../dto/user/SaveDreamDto");
+const userService = require('../models/service/user/UserService');
+const validation = require('../libs/validations');
+const ResponseDto = require('../dto/ResponseDto');
+const CheckUserDto = require('../dto/user/CheckUserDto');
+const UserServiceError = require('../models/Error');
+const SaveDreamDto = require('../dto/user/SaveDreamDto');
 module.exports = {
   findAllUser: async function (req, res) {
     res.send(await userService.allUser());
@@ -19,7 +19,7 @@ module.exports = {
           req.body.userEmail
         );
         res.status(200).send(
-          new ResponseDto(200, "회원가입이 완료되었습니다.", {
+          new ResponseDto(200, '회원가입이 완료되었습니다.', {
             userId: userId,
           })
         );
@@ -32,7 +32,7 @@ module.exports = {
   deleteUser: async function (req, res) {
     try {
       await userService.deleteUser(req.body.userId);
-      res.status(200).sned(new ResponseDto(200, "탈퇴가 완료되었습니다."));
+      res.status(200).sned(new ResponseDto(200, '탈퇴가 완료되었습니다.'));
     } catch (err) {
       res.status(500).send(new UserServiceError(err.message));
     }
@@ -44,7 +44,7 @@ module.exports = {
       res
         .status(200)
         .send(
-          new ResponseDto(200, "회원 존재 유무 결과", new CheckUserDto(user))
+          new ResponseDto(200, '회원 존재 유무 결과', new CheckUserDto(user))
         );
     } catch (err) {
       res.status(500).send(new UserServiceError(err.message));
@@ -53,7 +53,7 @@ module.exports = {
   saveDream: async function (req, res) {
     try {
       await userService.saveDream(req.body.userId, req.body.dreamId);
-      res.status(200).send(new ResponseDto(200, "해몽 카드 저장 완료"));
+      res.status(200).send(new ResponseDto(200, '해몽 카드 저장 완료'));
     } catch (err) {
       res.status(500).send(new UserServiceError(err.message));
     }
@@ -63,7 +63,7 @@ module.exports = {
       const dreamInfo = await userService.getAllSaveDream(req.body.userId);
       res
         .status(200)
-        .send(new ResponseDto(200, "success", new SaveDreamDto(dreamInfo)));
+        .send(new ResponseDto(200, 'success', new SaveDreamDto(dreamInfo)));
     } catch (err) {
       console.log(err);
       res.status(500).send(new UserServiceError(err.message));
@@ -72,7 +72,7 @@ module.exports = {
   deleteUserDream: async function (req, res) {
     try {
       await userService.deleteUserDream(req.body.dreamIdList);
-      res.status(200).send(new ResponseDto(200, "해몽 카드 삭제 완료"));
+      res.status(200).send(new ResponseDto(200, '해몽 카드 삭제 완료'));
     } catch (err) {
       console.log(err);
       res.status(500).send(new UserServiceError(err.message));
