@@ -26,7 +26,7 @@ class DreamCard extends Sequelize.Model {
       },
       {
         sequelize,
-        charset: 'utf8',
+        charset: 'utf8mb4',
         modelName: 'dream_card',
         tableName: 'dream_card',
         timestamps: false,

@@ -3,7 +3,7 @@ const validation = require('../libs/validations');
 const ResponseDto = require('../dto/ResponseDto');
 const CheckUserDto = require('../dto/user/CheckUserDto');
 const UserServiceError = require('../models/Error');
-gui;
+const SaveDreamDto = require('../dto/user/SaveDreamDto');
 module.exports = {
   findAllUser: async function (req, res) {
     res.send(await userService.allUser());
@@ -40,12 +40,41 @@ module.exports = {
   checkUser: async function (req, res) {
     try {
       const user = await userService.findUser(req.body.userEmail);
+      console.log(user.dataValues);
       res
         .status(200)
-        .json(
+        .send(
           new ResponseDto(200, '회원 존재 유무 결과', new CheckUserDto(user))
         );
     } catch (err) {
+      res.status(500).send(new UserServiceError(err.message));
+    }
+  },
+  saveDream: async function (req, res) {
+    try {
+      await userService.saveDream(req.body.userId, req.body.dreamId);
+      res.status(200).send(new ResponseDto(200, '해몽 카드 저장 완료'));
+    } catch (err) {
+      res.status(500).send(new UserServiceError(err.message));
+    }
+  },
+  getSaveDreamList: async function (req, res) {
+    try {
+      const dreamInfo = await userService.getAllSaveDream(req.body.userId);
+      res
+        .status(200)
+        .send(new ResponseDto(200, 'success', new SaveDreamDto(dreamInfo)));
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(new UserServiceError(err.message));
+    }
+  },
+  deleteUserDream: async function (req, res) {
+    try {
+      await userService.deleteUserDream(req.body.dreamIdList);
+      res.status(200).send(new ResponseDto(200, '해몽 카드 삭제 완료'));
+    } catch (err) {
+      console.log(err);
       res.status(500).send(new UserServiceError(err.message));
     }
   },

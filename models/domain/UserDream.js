@@ -19,6 +19,9 @@ class UserDream extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
+        registerDate: {
+          type: Sequelize.DATE,
+        },
       },
       {
         sequelize,

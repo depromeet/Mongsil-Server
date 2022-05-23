@@ -18,7 +18,7 @@ class BigCategory extends Sequelize.Model {
       },
       {
         sequelize,
-        charset: 'utf8',
+        charset: 'utf8mb4',
         modelName: 'big_category',
         tableName: 'big_category',
         timestamps: false,

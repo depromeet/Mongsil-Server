@@ -7,14 +7,14 @@ const assert = require('assert');
 
 describe('POST 유저 정보 저장', () => {
   describe('success save user', () => {
-    it('유저 아이디 반환', async () => {
+    it.only('유저 아이디 반환', async () => {
       const name = 'test';
-      const email = 'test13573@naver.com';
+      const email = '2@naver.com';
       const transaction = await sequelize.transaction();
       const userId = await userService.saveUser(name, email);
       const findUser = await userRepository.findByEmail(email, transaction);
       await transaction.rollback();
-      userId.should.equal(findUser.id);
+      userId.should.equal(findUser.dataValues.id);
     });
     describe('fail save user', () => {
       it('중복 이메일 에러 반환', async () => {
@@ -27,11 +27,13 @@ describe('POST 유저 정보 저장', () => {
     });
   });
 });
+
 describe('POST 유저 회원 탈퇴', () => {
   describe('success user expire', () => {
-    it.only('status 값 변경', async () => {});
+    it('status 값 변경', async () => {});
   });
 });
+
 describe('POST 유저 가입 조회', () => {
   describe('success', () => {
     it.only('유저 Id 조회', async () => {
