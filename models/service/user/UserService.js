@@ -19,7 +19,7 @@ module.exports = {
           transaction
         );
         await transaction.commit();
-        return userInfo;
+        return userInfo.dataValues.id;
       }
     } catch (err) {
       console.log(err);
