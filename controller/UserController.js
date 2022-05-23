@@ -10,8 +10,9 @@ module.exports = {
     res.send(await userService.allUser());
   },
   saveUser: async function (req, res) {
-    const transaction = await sequelize.transaction();
+    let transaction;
     try {
+      transaction = await sequelize.transaction();
       const validationValue = validation.userSaveValidation(req.body);
       if (validationValue) {
         throw new Error(validationValue);
@@ -30,18 +31,19 @@ module.exports = {
       }
     } catch (err) {
       console.log(err);
-      await transaction.rollback();
+      await transaction?.rollback();
       res.status(500).send(new UserServiceError(err.message));
     }
   },
   deleteUser: async function (req, res) {
-    const transaction = await sequelize.transaction();
+    let transaction;
     try {
+      transaction = await sequelize.transaction();
       await userService.deleteUser(req.body.userId, transaction);
       await transaction.commit();
       res.status(200).send(new ResponseDto(200, '탈퇴가 완료되었습니다.'));
     } catch (err) {
-      await transaction.rollback();
+      await transaction?.rollback();
       res.status(500).send(new UserServiceError(err.message));
     }
   },
@@ -58,8 +60,9 @@ module.exports = {
     }
   },
   saveDream: async function (req, res) {
-    const transaction = await sequelize.transaction();
+    let transaction;
     try {
+      transaction = await sequelize.transaction();
       await userService.saveDream(
         req.body.userId,
         req.body.dreamId,
@@ -68,7 +71,7 @@ module.exports = {
       await transaction.commit();
       res.status(200).send(new ResponseDto(200, '해몽 카드 저장 완료'));
     } catch (err) {
-      await transaction.rollback();
+      await transaction?.rollback();
       res.status(500).send(new UserServiceError(err.message));
     }
   },
@@ -84,14 +87,15 @@ module.exports = {
     }
   },
   deleteUserDream: async function (req, res) {
-    const transaction = await sequelize.transaction();
+    let transaction;
     try {
+      transaction = await sequelize.transaction();
       await userService.deleteUserDream(req.body.dreamIdList, transaction);
       await transaction.commit();
       res.status(200).send(new ResponseDto(200, '해몽 카드 삭제 완료'));
     } catch (err) {
       console.log(err);
-      await transaction.rollback();
+      await transaction?.rollback();
       res.status(500).send(new UserServiceError(err.message));
     }
   },
