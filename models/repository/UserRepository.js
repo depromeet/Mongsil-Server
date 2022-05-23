@@ -14,15 +14,12 @@ module.exports = {
 
     return user;
   },
-  findByEmail: async function (userEmail, transaction) {
-    const user = await Sequelize.User.findOne(
-      {
-        where: {
-          email: userEmail,
-        },
+  findByEmail: async function (userEmail) {
+    const user = await Sequelize.User.findOne({
+      where: {
+        email: userEmail,
       },
-      { transaction: transaction }
-    );
+    });
 
     return user;
   },

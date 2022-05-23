@@ -1,6 +1,6 @@
-const { Category, Dream, DreamCategory } = require("../index");
-const moment = require("moment");
-const Sequelize = require("../index");
+const { Category, Dream, DreamCategory } = require('../index');
+const moment = require('moment');
+const Sequelize = require('../index');
 const Op = Sequelize.Op;
 module.exports = {
   save: async function (userId, dreamId, transaction) {
@@ -9,40 +9,30 @@ module.exports = {
       { transaction: transaction }
     );
   },
-  findByUserIdAndDreamId: async function (userId, dreamId, transaction) {
-    return await Sequelize.UserDream.findAll(
-      {
-        where: {
-          userId: userId,
-          dreamId: dreamId,
-        },
+  findByUserIdAndDreamId: async function (userId, dreamId) {
+    return await Sequelize.UserDream.findAll({
+      where: {
+        userId: userId,
+        dreamId: dreamId,
       },
-      {
-        transaction: transaction,
-      }
-    );
+    });
   },
-  findByUserId: async function (userId, transaction) {
-    return await Sequelize.UserDream.findAll(
-      {
+  findByUserId: async function (userId) {
+    return await Sequelize.UserDream.findAll({
+      include: {
+        model: Dream,
         include: {
-          model: Dream,
+          model: DreamCategory,
           include: {
-            model: DreamCategory,
-            include: {
-              model: Category,
-            },
+            model: Category,
           },
         },
-        where: {
-          userId: userId,
-        },
-        order: [["registerDate", "desc"]],
       },
-      {
-        transaction: transaction,
-      }
-    );
+      where: {
+        userId: userId,
+      },
+      order: [['registerDate', 'desc']],
+    });
   },
   deleteByid: async function (id, transaction) {
     return await Sequelize.UserDream.destroy(

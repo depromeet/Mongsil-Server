@@ -7,21 +7,21 @@ const assert = require('assert');
 
 describe('POST 유저 정보 저장', () => {
   describe('success save user', () => {
-    it.only('유저 아이디 반환', async () => {
+    it('유저 아이디 반환', async () => {
       const name = 'test';
-      const email = '2@naver.com';
+      const email = '23265@naver.com';
       const transaction = await sequelize.transaction();
-      const userId = await userService.saveUser(name, email);
-      const findUser = await userRepository.findByEmail(email, transaction);
+      const userId = await userService.saveUser(name, email, transaction);
       await transaction.rollback();
-      userId.should.equal(findUser.dataValues.id);
+      userId.should.be.a.Number();
     });
     describe('fail save user', () => {
       it('중복 이메일 에러 반환', async () => {
+        const transaction = await sequelize.transaction();
         const name = 'test';
         const email = 'test@naver.com';
         assert.rejects(async function () {
-          await userService.saveUser(name, email);
+          await userService.saveUser(name, email, transaction);
         }, '이메일이 중복되었습니다.');
       });
     });
@@ -30,14 +30,22 @@ describe('POST 유저 정보 저장', () => {
 
 describe('POST 유저 회원 탈퇴', () => {
   describe('success user expire', () => {
-    it('status 값 변경', async () => {});
+    it('user 삭제', async () => {
+      const transaction = await sequelize.transaction();
+      const name = 'test';
+      const email = '11112@naver.com';
+      const userId = await userService.saveUser(name, email, transaction);
+      await transaction.commit();
+      await userService.deleteUser(userId);
+    });
   });
 });
 
 describe('POST 유저 가입 조회', () => {
   describe('success', () => {
-    it.only('유저 Id 조회', async () => {
+    it('유저 Id 조회', async () => {
       const userInfo = await userService.findUser('test@naver.com');
+      userInfo.dataValues.email.should.equal('test@naver.com');
     });
   });
 });
