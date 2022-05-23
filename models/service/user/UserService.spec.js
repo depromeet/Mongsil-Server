@@ -26,16 +26,16 @@ describe('POST 유저 정보 저장', () => {
       });
     });
   });
-  describe('POST 유저 회원 탈퇴', () => {
-    describe('success user expire', () => {
-      it.only('status 값 변경', async () => {});
-    });
+});
+describe('POST 유저 회원 탈퇴', () => {
+  describe('success user expire', () => {
+    it.only('status 값 변경', async () => {});
   });
-  describe('POST 유저 가입 조회', () => {
-    describe('success', () => {
-      it.only('유저 Id 조회', async () => {
-        const userInfo = await userService.findUser('test@naver.com');
-      });
+});
+describe('POST 유저 가입 조회', () => {
+  describe('success', () => {
+    it.only('유저 Id 조회', async () => {
+      const userInfo = await userService.findUser('test@naver.com');
     });
   });
 });
