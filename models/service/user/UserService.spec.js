@@ -4,6 +4,7 @@ const { sequelize, User } = require('../../index');
 const UserServiceError = require('../../Error');
 const should = require('should');
 const assert = require('assert');
+const userDreamRepository = require('../../repository/UserDreamRepository');
 
 describe('POST 유저 정보 저장', () => {
   describe('success save user', () => {
@@ -46,6 +47,25 @@ describe('POST 유저 가입 조회', () => {
     it('유저 Id 조회', async () => {
       const userInfo = await userService.findUser('test@naver.com');
       userInfo.dataValues.email.should.equal('test@naver.com');
+    });
+  });
+});
+
+describe.only('POST 유저 해몽 저장', async () => {
+  describe('success save', () => {
+    it('dream save success', async () => {
+      let transaction = await sequelize.transaction();
+      const name = 'test';
+      const email = '1255@naver.com';
+      let userId = await userService.saveUser(name, email, transaction);
+      console.log(userId);
+      await userService.saveDream(userId, 1, transaction);
+      await userService.saveDream(userId, 1, transaction);
+
+      const userDream = await userDreamRepository.findByUserId(userId);
+      // console.log(userDream);
+      // userDream.length.should.be.equal(1);
+      await transaction.rollback();
     });
   });
 });
