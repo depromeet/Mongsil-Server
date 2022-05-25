@@ -25,7 +25,7 @@ module.exports = {
         await transaction.commit();
         res.status(200).send(
           new ResponseDto(200, '회원가입이 완료되었습니다.', {
-            userId: userId,
+            userId: String(userId),
           })
         );
       }
