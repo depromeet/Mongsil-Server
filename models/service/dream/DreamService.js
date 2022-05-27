@@ -40,11 +40,11 @@ module.exports = class DreamService {
         if (idx === -1) {
           newVerbAndAdjective.push({
             name: consonant,
-            categories: [el.name],
+            categories: [{ name: el.name }],
           });
           consonants.push(consonant);
         } else {
-          newVerbAndAdjective[idx].categories.push(el.name);
+          newVerbAndAdjective[idx].categories.push({ name: el.name });
         }
       });
 
@@ -52,7 +52,13 @@ module.exports = class DreamService {
         noun: noun.map((el) => {
           return {
             name: el.name,
-            categories: el.categories.map((category) => category.name),
+            image: el.dataValues.bigImage,
+            categories: el.categories.map((category) => {
+              return {
+                name: category.name,
+                image: category.dataValues.smallImage,
+              };
+            }),
           };
         }),
         verbAndAdjective: newVerbAndAdjective,

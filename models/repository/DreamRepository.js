@@ -8,7 +8,7 @@ module.exports = {
   findAllNoun: async () => {
     try {
       const noun = await Sequelize.BigCategory.findAll({
-        attributes: ['name'],
+        attributes: ['name', ['image', 'bigImage']],
         where: {
           name: {
             [Op.ne]: '동사/형용사',
@@ -17,7 +17,7 @@ module.exports = {
         include: [
           {
             model: Sequelize.Category,
-            attributes: ['name'],
+            attributes: ['name', ['image', 'smallImage']],
           },
         ],
       });
@@ -31,7 +31,7 @@ module.exports = {
   findAllVerbAndAdjective: async () => {
     try {
       const verbAndAdjective = await Sequelize.Category.findAll({
-        attributes: ['name'],
+        attributes: ['name', 'image'],
         where: {
           bigCategoryId: 4,
         },
