@@ -5,6 +5,7 @@ const hangul = require('hangul-js');
 const ResponseDto = require('../../../dto/ResponseDto');
 
 const dreamRepository = require('../../repository/DreamRepository');
+const config = require('../../../config/config.json').development;
 
 module.exports = class DreamService {
   constructor(req) {
@@ -40,11 +41,16 @@ module.exports = class DreamService {
         if (idx === -1) {
           newVerbAndAdjective.push({
             name: consonant,
-            categories: [{ name: el.name }],
+            categories: [
+              { name: el.name, image: config.staticImageUrl + el.image },
+            ],
           });
           consonants.push(consonant);
         } else {
-          newVerbAndAdjective[idx].categories.push({ name: el.name });
+          newVerbAndAdjective[idx].categories.push({
+            name: el.name,
+            image: config.staticImageUrl + el.image,
+          });
         }
       });
 
@@ -52,11 +58,11 @@ module.exports = class DreamService {
         noun: noun.map((el) => {
           return {
             name: el.name,
-            image: el.dataValues.bigImage,
+            image: config.staticImageUrl + el.dataValues.bigImage,
             categories: el.categories.map((category) => {
               return {
                 name: category.name,
-                image: category.dataValues.smallImage,
+                image: config.staticImageUrl + category.dataValues.smallImage,
               };
             }),
           };
@@ -175,7 +181,7 @@ module.exports = class DreamService {
         return {
           id: String(el.id),
           title: el.title,
-          image: [el.image],
+          image: [config.staticImageUrl + el.image],
         };
       });
 
@@ -224,7 +230,10 @@ module.exports = class DreamService {
           return {
             id: el.id,
             title: el.title,
-            image: el.image.split(',').slice(0, 2),
+            image: el.image
+              .split(',')
+              .slice(0, 2)
+              .map((e) => config.staticImageUrl + e),
           };
         }),
       });
