@@ -171,16 +171,22 @@ module.exports = class DreamService {
       }
 
       const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
-      dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
+      const newDream = dream.map((el) => {
+        return {
+          id: String(el.id),
+          title: el.title,
+          image: [el.image],
+        };
+      });
 
       await dreamRepository.updateOnlyHitByKeword(mainKeword, subKeword);
 
       if (!subKeword) {
-        return new ResponseDto(200, '필터 결과 조회', { dream });
+        return new ResponseDto(200, '필터 결과 조회', { newDream });
       }
 
       return new ResponseDto(200, '필터 결과 조회', {
-        dream: dream.filter((el) => {
+        dream: newDream.filter((el) => {
           const regex = new RegExp(subKeword);
 
           return regex.test(el.title);
@@ -193,29 +199,35 @@ module.exports = class DreamService {
 
   async findAllDreamSearch() {
     const keword = this.query.keword;
+    let dream;
 
     try {
       const categoryId = await dreamRepository.findOneCategoryByKeword(keword);
 
       if (!categoryId) {
-        const dream = await dreamRepository.findAllCategorySearchByKeword(
-          keword
-        );
-        dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
+        dream = await dreamRepository.findAllCategorySearchByKeword(keword);
 
         if (!dream.length) {
           return new ResponseDto(202, '검색 결과가 존재하지 않습니다.');
         }
-
-        return new ResponseDto(200, '검색 결과 조회.', { dream });
+      } else {
+        dream = await dreamRepository.findAllCategoryByKeword(categoryId);
       }
 
-      const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
       dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
 
       await dreamRepository.updateOnlyHitByKeword(keword);
 
-      return new ResponseDto(200, '검색 결과 조회', { dream });
+      // return new ResponseDto(200, '', { dream });
+      return new ResponseDto(200, '검색 결과 조회', {
+        dream: dream.map((el) => {
+          return {
+            id: el.id,
+            title: el.title,
+            image: el.image.split(',').slice(0, 2),
+          };
+        }),
+      });
     } catch (err) {
       throw err;
     }
@@ -241,6 +253,7 @@ module.exports = class DreamService {
         return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
       }
       dream.dataValues.id = String(dream.dataValues.id);
+      dream.dataValues.images = ['sample', 'sample'];
 
       return new ResponseDto(200, '꿈 결과 조회', { dream });
     } catch (err) {

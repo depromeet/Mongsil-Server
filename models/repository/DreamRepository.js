@@ -61,9 +61,11 @@ module.exports = {
   findAllCategoryByKeword: async (categoryId) => {
     try {
       const dream = await Sequelize.sequelize.query(`
-        SELECT dream.id, title FROM dream
-        INNER JOIN dream_category
+        SELECT dream.id, title, category.image FROM dream
+        LEFT JOIN dream_category
         ON category_id = ${categoryId}
+        LEFT JOIN category
+        ON category.id = dream_category.category_id
         WHERE dream.id = dream_category.dream_id
         ORDER BY dream.id ASC;
         `);
@@ -102,8 +104,16 @@ module.exports = {
 
   findAllCategorySearchByKeword: async (keword) => {
     try {
-      const query =
-        'select id, title from dream where replace(title," ","") like :searchText or replace(title," ","") like :searchText ORDER BY id ASC';
+      const query = `select dream.id, dream.title, group_concat(category.image) as image, group_concat(category.name) name from dream
+        left join dream_category
+        on dream_category.dream_id = dream.id
+        left join category
+        on category.id = dream_category.category_id AND category.name != '기타'
+        where replace(title," ","")
+        like :searchText or replace(title," ","")
+        like :searchText
+        group by dream.id
+        ORDER BY id ASC`;
 
       const dream = await Sequelize.sequelize.query(query, {
         replacements: { searchText: `%${keword.replace(/ /gi, '%')}%` },
@@ -131,6 +141,21 @@ module.exports = {
       );
 
       return isUpdate;
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  findAllDreamImage: async (dreamId) => {
+    try {
+      const query = `select category.image from category
+      left join dream_category
+      on dream_category.category_id = category.id
+      where dream_category.dream_id = ${dreamId}`;
+
+      const images = Sequelize.sequelize.query(query);
+
+      return images;
     } catch (err) {
       throw err;
     }

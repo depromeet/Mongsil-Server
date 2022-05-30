@@ -15,6 +15,9 @@ class BigCategory extends Sequelize.Model {
           type: Sequelize.STRING(20),
           allowNull: false,
         },
+        image: {
+          type: Sequelize.STRING(255),
+        },
       },
       {
         sequelize,
