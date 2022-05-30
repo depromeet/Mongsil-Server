@@ -253,7 +253,7 @@ module.exports = class DreamService {
         return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
       }
       dream.dataValues.id = String(dream.dataValues.id);
-      dream.dataValues.images = ['sample', 'sample'];
+      dream.dataValues.images = ['sample-image.png', 'sample-image.png'];
 
       return new ResponseDto(200, '꿈 결과 조회', { dream });
     } catch (err) {
