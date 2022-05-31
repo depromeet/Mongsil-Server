@@ -1,8 +1,11 @@
 'use strict';
 
+const hangul = require('hangul-js');
+
 const ResponseDto = require('../../../dto/ResponseDto');
 
 const dreamRepository = require('../../repository/DreamRepository');
+const config = require('../../../config/config.json').development;
 
 module.exports = class DreamService {
   constructor(req) {
@@ -11,18 +14,60 @@ module.exports = class DreamService {
   }
 
   async findAllCategory() {
+    const hangulMap = {
+      ㄲ: 'ㄱ',
+      ㄸ: 'ㄷ',
+      ㅃ: 'ㅂ',
+      ㅆ: 'ㅅ',
+      ㅉ: 'ㅈ',
+    };
+
     try {
       const noun = await dreamRepository.findAllNoun();
       const verbAndAdjective = await dreamRepository.findAllVerbAndAdjective();
+
+      const consonants = [];
+      const newVerbAndAdjective = [];
+
+      verbAndAdjective.forEach((el) => {
+        let consonant = hangul.disassemble(el.name)[0];
+
+        if (hangulMap[consonant]) {
+          consonant = hangulMap[consonant];
+        }
+
+        const idx = consonants.indexOf(consonant);
+
+        if (idx === -1) {
+          newVerbAndAdjective.push({
+            name: consonant,
+            categories: [
+              { name: el.name, image: config.staticImageUrl + el.image },
+            ],
+          });
+          consonants.push(consonant);
+        } else {
+          newVerbAndAdjective[idx].categories.push({
+            name: el.name,
+            image: config.staticImageUrl + el.image,
+          });
+        }
+      });
 
       return {
         noun: noun.map((el) => {
           return {
             name: el.name,
-            categories: el.categories.map((category) => category.name),
+            image: config.staticImageUrl + el.dataValues.bigImage,
+            categories: el.categories.map((category) => {
+              return {
+                name: category.name,
+                image: config.staticImageUrl + category.dataValues.smallImage,
+              };
+            }),
           };
         }),
-        verbAndAdjective: verbAndAdjective.map((el) => el.name),
+        verbAndAdjective: newVerbAndAdjective,
       };
     } catch (err) {
       throw err;
@@ -132,15 +177,22 @@ module.exports = class DreamService {
       }
 
       const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
+      const newDream = dream.map((el) => {
+        return {
+          id: String(el.id),
+          title: el.title,
+          image: [config.staticImageUrl + el.image],
+        };
+      });
 
       await dreamRepository.updateOnlyHitByKeword(mainKeword, subKeword);
 
       if (!subKeword) {
-        return new ResponseDto(200, '필터 결과 조회', { dream });
+        return new ResponseDto(200, '필터 결과 조회', { newDream });
       }
 
       return new ResponseDto(200, '필터 결과 조회', {
-        dream: dream.filter((el) => {
+        dream: newDream.filter((el) => {
           const regex = new RegExp(subKeword);
 
           return regex.test(el.title);
@@ -153,27 +205,38 @@ module.exports = class DreamService {
 
   async findAllDreamSearch() {
     const keword = this.query.keword;
+    let dream;
 
     try {
       const categoryId = await dreamRepository.findOneCategoryByKeword(keword);
 
       if (!categoryId) {
-        const dream = await dreamRepository.findAllCategorySearchByKeword(
-          keword
-        );
+        dream = await dreamRepository.findAllCategorySearchByKeword(keword);
 
         if (!dream.length) {
           return new ResponseDto(202, '검색 결과가 존재하지 않습니다.');
         }
-
-        return new ResponseDto(200, '검색 결과 조회.', { dream });
+      } else {
+        dream = await dreamRepository.findAllCategoryByKeword(categoryId);
       }
 
-      const dream = await dreamRepository.findAllCategoryByKeword(categoryId);
+      dream.forEach((_, idx) => (dream[idx].id = String(dream[idx].id)));
 
       await dreamRepository.updateOnlyHitByKeword(keword);
 
-      return new ResponseDto(200, '검색 결과 조회', { dream });
+      // return new ResponseDto(200, '', { dream });
+      return new ResponseDto(200, '검색 결과 조회', {
+        dream: dream.map((el) => {
+          return {
+            id: el.id,
+            title: el.title,
+            image: el.image
+              .split(',')
+              .slice(0, 2)
+              .map((e) => config.staticImageUrl + e),
+          };
+        }),
+      });
     } catch (err) {
       throw err;
     }
@@ -198,6 +261,8 @@ module.exports = class DreamService {
       if (!dream) {
         return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
       }
+      dream.dataValues.id = String(dream.dataValues.id);
+      dream.dataValues.images = ['sample-image.png', 'sample-image.png'];
 
       return new ResponseDto(200, '꿈 결과 조회', { dream });
     } catch (err) {

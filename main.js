@@ -19,6 +19,8 @@ app.use(morgan('dev'));
 app.use(express.json()); // json 파싱
 app.use(express.urlencoded({ extended: false })); // uri 파싱
 
+app.use('/public', express.static('public'));
+
 app.use('/test', function (req, res) {
   res.send('success');
 });
