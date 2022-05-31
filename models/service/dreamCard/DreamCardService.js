@@ -10,9 +10,31 @@ module.exports = {
       transaction
     );
     for (let i = 0; i < categories.length; i++) {
-      console.log(categories[i]);
       await dreamCardCategoryRepository.save(
         cardId.dataValues.id,
+        categories[i],
+        transaction
+      );
+    }
+  },
+  update: async function (
+    dreamCardId,
+    title,
+    description,
+    categories,
+    transaction
+  ) {
+    await dreamCardCategoryRepository.deleteByCardId(dreamCardId, transaction);
+    await dreamCardRepository.updateByCardId(
+      dreamCardId,
+      title,
+      description,
+      categories,
+      transaction
+    );
+    for (let i = 0; i < categories.length; i++) {
+      await dreamCardCategoryRepository.save(
+        dreamCardId,
         categories[i],
         transaction
       );

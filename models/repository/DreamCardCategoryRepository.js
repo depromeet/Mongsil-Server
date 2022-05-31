@@ -7,4 +7,16 @@ module.exports = {
       { transaction: transaction }
     );
   },
+  deleteByCardId: async function (cardId, transaction) {
+    await Sequelize.DreamCardCategory.destroy(
+      {
+        where: {
+          dreamCardId: cardId,
+        },
+      },
+      {
+        transaction: transaction,
+      }
+    );
+  },
 };
