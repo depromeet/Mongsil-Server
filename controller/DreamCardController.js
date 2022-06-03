@@ -3,7 +3,7 @@ const validation = require('../libs/validations');
 const ResponseDto = require('../dto/ResponseDto');
 const CheckUserDto = require('../dto/user/CheckUserDto');
 const DreamCardServiceError = require('../models/service/dreamCard/Error');
-const SaveDreamDto = require('../dto/user/SaveDreamDto');
+const DreamCardDto = require('../dto/dreamCard/DreamCardDto');
 const { sequelize, User } = require('../models/index');
 module.exports = {
   saveDreamCard: async function (req, res) {
@@ -47,6 +47,33 @@ module.exports = {
       res.status(200).send(new ResponseDto(200, '수정 완료'));
     } catch (err) {
       await transaction.rollback();
+      console.log(err);
+      res.status(403).send(new DreamCardServiceError(err.message));
+    }
+  },
+  deleteDreamCard: async function (req, res) {
+    let transaction;
+    try {
+      const dreamCardId = req.body.dreamCardId;
+
+      await dreamCardService.delete(dreamCardId, transaction);
+      await transaction.commit();
+      res.status(200).send(new ResponseDto(200, '삭제 완료'));
+    } catch (err) {
+      await transaction.rollback();
+      console.log(err);
+      res.status(403).send(new DreamCardServiceError(err.message));
+    }
+  },
+  getDreamCardList: async function (req, res) {
+    try {
+      const userId = req.body.userId;
+
+      const dreamCardList = await dreamCardService.getDreamCardList(userId);
+      res
+        .status(200)
+        .send(new ResponseDto(200, 'success', new DreamCardDto(dreamCardList)));
+    } catch (err) {
       console.log(err);
       res.status(403).send(new DreamCardServiceError(err.message));
     }

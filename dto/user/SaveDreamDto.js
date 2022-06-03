@@ -1,11 +1,10 @@
 class SaveDreamDto {
-  size;
   dreamList;
   constructor(dreamInfo) {
     this.dreamList = this.getDreamList(dreamInfo);
   }
   getDreamList(dreamInfo) {
-    const result = [];
+    const reåsult = [];
 
     for (const dream of dreamInfo) {
       const temp = new DreamList(dream.dataValues);

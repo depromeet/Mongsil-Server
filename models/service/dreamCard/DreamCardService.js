@@ -25,7 +25,7 @@ module.exports = {
     transaction
   ) {
     await dreamCardCategoryRepository.deleteByCardId(dreamCardId, transaction);
-    await dreamCardRepository.updateByCardId(
+    await dreamCardRepository.updateById(
       dreamCardId,
       title,
       description,
@@ -39,5 +39,12 @@ module.exports = {
         transaction
       );
     }
+  },
+  delete: async function (dreamCardId, transaction) {
+    await dreamCardRepository.deleteById(dreamCardId, transaction);
+    await dreamCardCategoryRepository.deleteByCardId(dreamCardId, transaction);
+  },
+  getDreamCardList: async function (userId) {
+    return await dreamCardRepository.findByUserId(userId);
   },
 };

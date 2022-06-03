@@ -23,6 +23,9 @@ class DreamCard extends Sequelize.Model {
           type: Sequelize.TEXT,
           allowNull: true,
         },
+        registerDate: {
+          type: Sequelize.DATE,
+        },
       },
       {
         sequelize,
