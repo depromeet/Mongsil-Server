@@ -31,7 +31,7 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const dreamCardId = req.body.dreamCardId;
+      const dreamCardId = req.body.cardId;
       const title = req.body.title;
       const description = req.body.description;
       const categories = req.body.categories;
