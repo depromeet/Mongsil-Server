@@ -27,13 +27,8 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const { dreamCardId, title, description, categories } = req.body;
-      await dreamCardService.update(
-        dreamCardId,
-        title,
-        description,
-        categories
-      );
+      const { cardId, title, description, categories } = req.body;
+      await dreamCardService.update(cardId, title, description, categories);
       await transaction.commit();
 
       res.status(200).send(new ResponseDto(200, '수정 완료'));
@@ -46,9 +41,9 @@ module.exports = {
   deleteDreamCard: async function (req, res) {
     let transaction;
     try {
-      const dreamCardId = req.body.dreamCardId;
+      const cardId = req.body.cardId;
 
-      await dreamCardService.delete(dreamCardId, transaction);
+      await dreamCardService.delete(cardId, transaction);
       await transaction.commit();
       res.status(200).send(new ResponseDto(200, '삭제 완료'));
     } catch (err) {
