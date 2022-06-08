@@ -11,11 +11,7 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const userId = req.body.userId;
-      const title = req.body.title;
-      const description = req.body.description;
-      const categories = req.body.categories;
-
+      const { userId, title, description, categories } = req.body;
       await dreamCardService.save(userId, title, description, categories);
       await transaction.commit();
 
@@ -31,11 +27,7 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const dreamCardId = req.body.cardId;
-      const title = req.body.title;
-      const description = req.body.description;
-      const categories = req.body.categories;
-
+      const { dreamCardId, title, description, categories } = req.body;
       await dreamCardService.update(
         dreamCardId,
         title,

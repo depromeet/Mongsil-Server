@@ -4,7 +4,7 @@ class SaveDreamDto {
     this.dreamList = this.getDreamList(dreamInfo);
   }
   getDreamList(dreamInfo) {
-    const reåsult = [];
+    const result = [];
 
     for (const dream of dreamInfo) {
       const temp = new DreamList(dream.dataValues);

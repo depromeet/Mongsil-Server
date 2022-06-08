@@ -28,7 +28,7 @@ app.use('/test', function (req, res) {
 
 app.use('/user', UserRouter);
 app.use('/api/dream', DreamRouter);
-app.use('/dreamCard', DreamCardRoute);
+app.use('/dream-card', DreamCardRoute);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

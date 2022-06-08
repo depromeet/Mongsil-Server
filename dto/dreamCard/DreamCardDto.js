@@ -4,13 +4,9 @@ class DreamCardDto {
     this.cardList = this.getDreamList(cardList);
   }
   getDreamList(cardInfo) {
-    const result = [];
-
-    for (const card of cardInfo) {
-      const temp = new CardList(card.dataValues);
-      result.push(temp);
-    }
-    return result;
+    return cardInfo.map((card) => {
+      return new CardList(card.dataValues);
+    });
   }
 }
 

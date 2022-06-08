@@ -1,4 +1,3 @@
-const { d } = require('hangul-js');
 const { DreamCardCategory, Category } = require('../index');
 const Sequelize = require('../index');
 const Op = Sequelize.Op;
