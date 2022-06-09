@@ -41,8 +41,8 @@ module.exports = {
     }
   },
   delete: async function (dreamCardId, transaction) {
-    await dreamCardRepository.deleteById(dreamCardId, transaction);
     await dreamCardCategoryRepository.deleteByCardId(dreamCardId, transaction);
+    await dreamCardRepository.deleteById(dreamCardId, transaction);
   },
   getDreamCardList: async function (userId) {
     return await dreamCardRepository.findByUserId(userId);

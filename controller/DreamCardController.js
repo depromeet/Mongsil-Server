@@ -41,14 +41,15 @@ module.exports = {
   deleteDreamCard: async function (req, res) {
     let transaction;
     try {
+      transaction = await sequelize.transaction();
       const cardId = req.body.cardId;
 
       await dreamCardService.delete(cardId, transaction);
       await transaction.commit();
       res.status(200).send(new ResponseDto(200, '삭제 완료'));
     } catch (err) {
-      await transaction.rollback();
       console.log(err);
+      await transaction.rollback();
       res.status(403).send(new DreamCardServiceError(err.message));
     }
   },
