@@ -1,5 +1,4 @@
 class SaveDreamDto {
-  size;
   dreamList;
   constructor(dreamInfo) {
     this.dreamList = this.getDreamList(dreamInfo);
@@ -35,9 +34,10 @@ class DreamList {
 
   getCategoryList(categoryInfo) {
     const result = [];
-    for (const category of categoryInfo) {
-      const temp = new CategoryList(category.dataValues);
+    for (let i = 0; i < categoryInfo.length; i++) {
+      const temp = new CategoryList(categoryInfo[i].dataValues);
       result.push(temp);
+      if (i >= 1) break;
     }
     return result;
   }

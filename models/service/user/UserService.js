@@ -1,7 +1,7 @@
 const userRepository = require('../../repository/UserRepository');
 const userDreamRepository = require('../../repository/UserDreamRepository');
 const { sequelize, User } = require('../../index');
-const UserServiceError = require('../../Error');
+const UserServiceError = require('./Error');
 module.exports = {
   allUser: async function () {
     return await userRepository.findAll();

@@ -13,7 +13,7 @@ class DreamCard extends Sequelize.Model {
         },
         userId: {
           type: Sequelize.INTEGER,
-          allowNull: false,
+          allowNull: true,
         },
         title: {
           type: Sequelize.TEXT,
@@ -21,7 +21,10 @@ class DreamCard extends Sequelize.Model {
         },
         description: {
           type: Sequelize.TEXT,
-          allowNull: false,
+          allowNull: true,
+        },
+        registerDate: {
+          type: Sequelize.DATE,
         },
       },
       {

@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const { sequelize } = require('./models');
 const UserRouter = require('./routes/UserRoute');
 const DreamRouter = require('./routes/DreamRoute');
+const DreamCardRoute = require('./routes/DreamCardRoute');
 const app = express();
 app.set('port', process.env.PORT || 3000);
 
@@ -27,6 +28,7 @@ app.use('/test', function (req, res) {
 
 app.use('/user', UserRouter);
 app.use('/api/dream', DreamRouter);
+app.use('/dream-card', DreamCardRoute);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

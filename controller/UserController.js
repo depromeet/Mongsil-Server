@@ -2,13 +2,14 @@ const userService = require('../models/service/user/UserService');
 const validation = require('../libs/validations');
 const ResponseDto = require('../dto/ResponseDto');
 const CheckUserDto = require('../dto/user/CheckUserDto');
-const UserServiceError = require('../models/Error');
+const UserServiceError = require('../models/service/user/Error');
 const SaveDreamDto = require('../dto/user/SaveDreamDto');
 const { sequelize, User } = require('../models/index');
 module.exports = {
   findAllUser: async function (req, res) {
     res.send(await userService.allUser());
   },
+
   saveUser: async function (req, res) {
     let transaction;
     try {
@@ -35,6 +36,7 @@ module.exports = {
       res.status(500).send(new UserServiceError(err.message));
     }
   },
+
   deleteUser: async function (req, res) {
     let transaction;
     try {
@@ -47,6 +49,7 @@ module.exports = {
       res.status(500).send(new UserServiceError(err.message));
     }
   },
+
   checkUser: async function (req, res) {
     try {
       const user = await userService.findUser(req.body.userEmail);
@@ -59,6 +62,7 @@ module.exports = {
       res.status(500).send(new UserServiceError(err.message));
     }
   },
+
   saveDream: async function (req, res) {
     let transaction;
     try {
@@ -75,6 +79,7 @@ module.exports = {
       res.status(500).send(new UserServiceError(err.message));
     }
   },
+
   getSaveDreamList: async function (req, res) {
     try {
       const dreamInfo = await userService.getAllSaveDream(req.body.userId);
@@ -86,6 +91,7 @@ module.exports = {
       res.status(500).send(new UserServiceError(err.message));
     }
   },
+
   deleteUserDream: async function (req, res) {
     let transaction;
     try {
