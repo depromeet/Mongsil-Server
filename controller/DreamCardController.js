@@ -42,9 +42,9 @@ module.exports = {
     let transaction;
     try {
       transaction = await sequelize.transaction();
-      const cardId = req.body.cardId;
+      const idList = req.body.idList;
 
-      await dreamCardService.delete(cardId, transaction);
+      await dreamCardService.delete(idList, transaction);
       await transaction.commit();
       res.status(200).send(new ResponseDto(200, '삭제 완료'));
     } catch (err) {

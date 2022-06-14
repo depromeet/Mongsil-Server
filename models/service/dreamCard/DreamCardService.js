@@ -2,7 +2,6 @@ const dreamCardRepository = require('../../repository/DreamCardRepository');
 const dreamCardCategoryRepository = require('../../repository/DreamCardCategoryRepository');
 module.exports = {
   save: async function (userId, title, description, categories, transaction) {
-    console.log(title);
     const cardId = await dreamCardRepository.save(
       userId,
       title,
@@ -40,9 +39,11 @@ module.exports = {
       );
     }
   },
-  delete: async function (dreamCardId, transaction) {
-    await dreamCardCategoryRepository.deleteByCardId(dreamCardId, transaction);
-    await dreamCardRepository.deleteById(dreamCardId, transaction);
+  delete: async function (idList, transaction) {
+    for (let id of idList) {
+      await dreamCardCategoryRepository.deleteByCardId(id, transaction);
+      await dreamCardRepository.deleteById(id, transaction);
+    }
   },
   getDreamCardList: async function (userId) {
     return await dreamCardRepository.findByUserId(userId);
