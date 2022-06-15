@@ -4,13 +4,13 @@ const { User } = require('../models');
 const router = express.Router();
 
 // UserService
-router.get('/findAll', UserController.findAllUser);
-router.post('/checkUser', UserController.checkUser);
-router.delete('/dropout', UserController.deleteUser);
-router.post('/signUp', UserController.saveUser);
+router.get('/', UserController.findAllUser);
+router.post('/check', UserController.checkUser);
+router.delete('/', UserController.deleteUser);
+router.post('/', UserController.saveUser);
 
 // UserDream
-router.post('/saveDream', UserController.saveDream);
-router.post('/dreamList', UserController.getSaveDreamList);
-router.delete('/dreamList', UserController.deleteUserDream);
+router.post('/dream', UserController.saveDream);
+router.post('/dream-list', UserController.getSaveDreamList);
+router.delete('/dream-list', UserController.deleteUserDream);
 module.exports = router;
