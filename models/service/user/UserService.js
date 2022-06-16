@@ -2,6 +2,8 @@ const userRepository = require('../../repository/UserRepository');
 const userDreamRepository = require('../../repository/UserDreamRepository');
 const { sequelize, User } = require('../../index');
 const UserServiceError = require('./Error');
+const dreamCardRepository = require('../../repository/DreamCardRepository');
+const dreamCardCategoryRepository = require('../../repository/DreamCardCategoryRepository');
 module.exports = {
   allUser: async function () {
     return await userRepository.findAll();
@@ -25,6 +27,14 @@ module.exports = {
   },
   deleteUser: async function (userId, transaction) {
     try {
+      const dreamCard = await dreamCardRepository.findByUserId(userId);
+      // for (let cardInfo of dreamCard.dataValues) {
+      //   await dreamCardCategoryRepository.deleteByCardId(
+      //     cardInfo.id,
+      //     transaction
+      //   );
+      // }
+      // await dreamCardRepository.deleteByUserId(userId, transaction);
       await userRepository.deleteById(userId, transaction);
     } catch (err) {
       console.log(err);

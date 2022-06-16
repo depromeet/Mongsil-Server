@@ -4,7 +4,7 @@ const ResponseDto = require('../dto/ResponseDto');
 const CheckUserDto = require('../dto/user/CheckUserDto');
 const UserServiceError = require('../models/service/user/Error');
 const SaveDreamDto = require('../dto/user/SaveDreamDto');
-const { sequelize, User } = require('../models/index');
+const { sequelize, User, UserDream } = require('../models/index');
 module.exports = {
   findAllUser: async function (req, res) {
     res.send(await userService.allUser());
