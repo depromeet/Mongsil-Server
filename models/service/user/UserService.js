@@ -28,13 +28,13 @@ module.exports = {
   deleteUser: async function (userId, transaction) {
     try {
       const dreamCard = await dreamCardRepository.findByUserId(userId);
-      for (let cardInfo of dreamCard.dataValues) {
-        await dreamCardCategoryRepository.deleteByCardId(
-          cardInfo.id,
-          transaction
-        );
-      }
-      await dreamCardRepository.deleteByUserId(userId, transaction);
+      // for (let cardInfo of dreamCard.dataValues) {
+      //   await dreamCardCategoryRepository.deleteByCardId(
+      //     cardInfo.id,
+      //     transaction
+      //   );
+      // }
+      // await dreamCardRepository.deleteByUserId(userId, transaction);
       await userRepository.deleteById(userId, transaction);
     } catch (err) {
       console.log(err);
