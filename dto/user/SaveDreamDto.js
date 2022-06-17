@@ -20,14 +20,14 @@ class DreamList {
   registerDate;
   title;
   description;
-  categoryList;
+  categories;
   constructor(dreamInfo) {
     this.id = String(dreamInfo.id);
     this.dreamId = String(dreamInfo.dreamId);
     this.registerDate = dreamInfo.registerDate;
     this.title = dreamInfo.dream.dataValues.title;
     this.description = dreamInfo.dream.dataValues.description;
-    this.categoryList = this.getCategoryList(
+    this.categories = this.getCategoryList(
       dreamInfo.dream.dataValues.dream_categories
     );
   }
