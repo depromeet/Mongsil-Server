@@ -15,13 +15,13 @@ class CardList {
   registerDate;
   title;
   description;
-  categoryList;
+  categories;
   constructor(cardInfo) {
     this.id = String(cardInfo.id);
     this.registerDate = cardInfo.registerDate;
     this.title = cardInfo.title;
     this.description = cardInfo.description;
-    this.categoryList = this.getCategoryList(cardInfo.dream_card_categories);
+    this.categories = this.getCategoryList(cardInfo.dream_card_categories);
   }
 
   getCategoryList(categoryInfo) {
