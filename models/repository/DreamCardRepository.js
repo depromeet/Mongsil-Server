@@ -36,4 +36,16 @@ module.exports = {
       order: [['registerDate', 'desc']],
     });
   },
+  findById: async function (id) {
+    console.log(id);
+    return await Sequelize.DreamCard.findAll({
+      include: {
+        model: DreamCardCategory,
+        include: {
+          model: Category,
+        },
+      },
+      where: { id: id },
+    });
+  },
 };

@@ -6,16 +6,36 @@ const DreamCardServiceError = require('../models/service/dreamCard/Error');
 const DreamCardDto = require('../dto/dreamCard/DreamCardDto');
 const { sequelize, User } = require('../models/index');
 module.exports = {
+  getDreamCard: async function (req, res) {
+    try {
+      const { diaryId } = req.params;
+      const cardInfo = await dreamCardService.getDreamCard(diaryId);
+
+      res
+        .status(200)
+        .send(new ResponseDto(200, '저장 완료', new DreamCardDto(cardInfo)));
+    } catch (err) {
+      console.log(err);
+      res.status(403).send(new DreamCardServiceError(err.message));
+    }
+  },
   saveDreamCard: async function (req, res) {
     let transaction;
     try {
       transaction = await sequelize.transaction();
 
       const { userId, title, description, categories } = req.body;
-      await dreamCardService.save(userId, title, description, categories);
+      const cardId = await dreamCardService.save(
+        userId,
+        title,
+        description,
+        categories
+      );
       await transaction.commit();
 
-      res.status(200).send(new ResponseDto(200, '저장 완료'));
+      res
+        .status(200)
+        .send(new ResponseDto(200, '저장 완료', { diaryId: String(cardId) }));
     } catch (err) {
       await transaction.rollback();
       console.log(err);
