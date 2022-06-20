@@ -47,8 +47,11 @@ class CategoryList {
   categoryId;
   name;
   image;
+  parentsKeyword;
   constructor(category) {
-    this.categoryId = String(category.id);
+    this.categoryId = String(category.category.dataValues.id);
+    this.parentsKeyword =
+      category.category.dataValues.big_category.dataValues.name;
     this.name = category.category.dataValues.name;
     this.image = category.category.dataValues.image;
   }

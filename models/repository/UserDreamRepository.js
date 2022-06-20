@@ -1,4 +1,4 @@
-const { Category, Dream, DreamCategory } = require('../index');
+const { Category, Dream, DreamCategory, BigCategory } = require('../index');
 const moment = require('moment');
 const Sequelize = require('../index');
 const Op = Sequelize.Op;
@@ -25,6 +25,9 @@ module.exports = {
           model: DreamCategory,
           include: {
             model: Category,
+            include: {
+              model: BigCategory,
+            },
           },
         },
       },
