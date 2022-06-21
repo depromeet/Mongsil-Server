@@ -1,4 +1,4 @@
-const { DreamCardCategory, Category } = require('../index');
+const { DreamCardCategory, Category, BigCategory } = require('../index');
 const Sequelize = require('../index');
 const Op = Sequelize.Op;
 module.exports = {
@@ -30,10 +30,27 @@ module.exports = {
         model: DreamCardCategory,
         include: {
           model: Category,
+          include: {
+            model: BigCategory,
+          },
         },
       },
       where: { userId: userId },
       order: [['registerDate', 'desc']],
+    });
+  },
+  findById: async function (id) {
+    return await Sequelize.DreamCard.findAll({
+      include: {
+        model: DreamCardCategory,
+        include: {
+          model: Category,
+          include: {
+            model: BigCategory,
+          },
+        },
+      },
+      where: { id: id },
     });
   },
 };

@@ -1,6 +1,10 @@
 const dreamCardRepository = require('../../repository/DreamCardRepository');
 const dreamCardCategoryRepository = require('../../repository/DreamCardCategoryRepository');
 module.exports = {
+  getDreamCard: async function (cardId) {
+    const cardInfo = await dreamCardRepository.findById(cardId);
+    return cardInfo;
+  },
   save: async function (userId, title, description, categories, transaction) {
     const cardId = await dreamCardRepository.save(
       userId,
@@ -15,6 +19,7 @@ module.exports = {
         transaction
       );
     }
+    return cardId.dataValues.id;
   },
   update: async function (
     dreamCardId,

@@ -17,8 +17,8 @@ fs.readdir(`./libs/${folderName}`, async (err, file) => {
               let dreamInfo = await JSON.parse(result);
               let category = await Sequelize.Category.create({
                 name: fileName,
-                bigCategoryId: 12,
-                image: 'sample',
+                bigCategoryId: 11,
+                image: fileName + '.png',
               });
               for (let i = 0; i < dreamInfo.length; i++) {
                 let title = dreamInfo[i].dream;
