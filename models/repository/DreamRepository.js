@@ -8,7 +8,7 @@ module.exports = {
   findAllNoun: async () => {
     try {
       const noun = await Sequelize.BigCategory.findAll({
-        attributes: ['name', ['image', 'bigImage']],
+        attributes: ['id', 'name', ['image', 'bigImage']],
         where: {
           name: {
             [Op.ne]: '동사/형용사',
@@ -17,7 +17,7 @@ module.exports = {
         include: [
           {
             model: Sequelize.Category,
-            attributes: ['name', ['image', 'smallImage']],
+            attributes: ['id', 'name', ['image', 'smallImage']],
           },
         ],
       });
@@ -31,7 +31,7 @@ module.exports = {
   findAllVerbAndAdjective: async () => {
     try {
       const verbAndAdjective = await Sequelize.Category.findAll({
-        attributes: ['name', 'image'],
+        attributes: ['id', 'name', 'image'],
         where: {
           bigCategoryId: 4,
         },
@@ -79,7 +79,7 @@ module.exports = {
   findPopularityKeword: async () => {
     try {
       const categories = await Sequelize.Category.findAll({
-        attributes: ['name'],
+        attributes: ['id', 'name'],
         limit: 8,
         order: [['hit', 'DESC']],
       });

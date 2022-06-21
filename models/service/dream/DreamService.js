@@ -42,14 +42,15 @@ module.exports = class DreamService {
           newVerbAndAdjective.push({
             name: consonant,
             categories: [
-              { name: el.name, image: config.staticImageUrl + el.image },
+              { id: el.id, name: el.name, image: config.dreamImage + el.image },
             ],
           });
           consonants.push(consonant);
         } else {
           newVerbAndAdjective[idx].categories.push({
+            id: el.id,
             name: el.name,
-            image: config.staticImageUrl + el.image,
+            image: config.dreamImage + el.image,
           });
         }
       });
@@ -57,12 +58,14 @@ module.exports = class DreamService {
       return {
         noun: noun.map((el) => {
           return {
+            id: String(el.id),
             name: el.name,
-            image: config.staticImageUrl + el.dataValues.bigImage,
+            image: config.categoryIcon + el.dataValues.bigImage,
             categories: el.categories.map((category) => {
               return {
+                id: String(category.id),
                 name: category.name,
-                image: config.staticImageUrl + category.dataValues.smallImage,
+                image: config.dreamImage + category.dataValues.smallImage,
               };
             }),
           };
@@ -181,7 +184,7 @@ module.exports = class DreamService {
         return {
           id: String(el.id),
           title: el.title,
-          image: [config.staticImageUrl + el.image],
+          image: [config.dreamImage + el.image],
         };
       });
 
@@ -233,7 +236,7 @@ module.exports = class DreamService {
             image: el.image
               .split(',')
               .slice(0, 2)
-              .map((e) => config.staticImageUrl + e),
+              .map((e) => config.dreamImage + e),
           };
         }),
       });
