@@ -44,12 +44,12 @@ class DreamList {
 }
 
 class CategoryList {
-  categoryId;
+  id;
   name;
   image;
   parentsKeyword;
   constructor(category) {
-    this.categoryId = String(category.category.dataValues.id);
+    this.id = String(category.category.dataValues.id);
     this.parentsKeyword =
       category.category.dataValues.big_category.dataValues.name;
     this.name = category.category.dataValues.name;

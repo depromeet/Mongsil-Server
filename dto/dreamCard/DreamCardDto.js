@@ -36,12 +36,12 @@ class CardList {
 }
 
 class CategoryList {
-  categoryId;
+  id;
   parentsKeyword;
   name;
   image;
   constructor(category) {
-    this.categoryId = String(category.category.dataValues.id);
+    this.id = String(category.category.dataValues.id);
     this.parentsKeyword =
       category.category.dataValues.big_category.dataValues.name;
     this.name = category.category.dataValues.name;
