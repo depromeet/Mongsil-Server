@@ -1,3 +1,4 @@
+const config = require('../../config/config.json');
 class SaveDreamDto {
   dreamList;
   constructor(dreamInfo) {
@@ -53,7 +54,8 @@ class CategoryList {
     this.parentsKeyword =
       category.category.dataValues.big_category.dataValues.name;
     this.name = category.category.dataValues.name;
-    this.image = category.category.dataValues.image;
+    this.image =
+      config.development.dreamImage + category.category.dataValues.image;
   }
 }
 module.exports = SaveDreamDto;
