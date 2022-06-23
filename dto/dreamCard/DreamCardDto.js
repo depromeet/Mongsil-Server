@@ -1,3 +1,4 @@
+const config = require('../../config/config.json');
 class DreamCardDto {
   cardList;
   constructor(cardList) {
@@ -36,16 +37,17 @@ class CardList {
 }
 
 class CategoryList {
-  categoryId;
+  id;
   parentsKeyword;
   name;
   image;
   constructor(category) {
-    this.categoryId = String(category.category.dataValues.id);
+    this.id = String(category.category.dataValues.id);
     this.parentsKeyword =
       category.category.dataValues.big_category.dataValues.name;
     this.name = category.category.dataValues.name;
-    this.image = category.category.dataValues.image;
+    this.image =
+      config.development.dreamImage + category.category.dataValues.image;
   }
 }
 module.exports = DreamCardDto;
