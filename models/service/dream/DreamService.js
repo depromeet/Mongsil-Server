@@ -42,7 +42,12 @@ module.exports = class DreamService {
           newVerbAndAdjective.push({
             name: consonant,
             categories: [
-              { id: String(el.id), parentsKeyword: consonant, name: el.name, image: config.dreamImage + el.image },
+              {
+                id: String(el.id),
+                parentsKeyword: consonant,
+                name: el.name,
+                image: config.dreamImage + el.image,
+              },
             ],
           });
           consonants.push(consonant);
