@@ -13,4 +13,7 @@ router.get('/result/:dreamId', dreamController.findOneDreamById);
 router.get('/search', dreamController.findAllDreamSearch);
 router.get('/popularity', dreamController.findPopularityKeword);
 
+router.get('/search/result', dreamController.getDreamSearchResult);
+router.get('/search/count', dreamController.getDreamSearchCount);
+
 module.exports = router;

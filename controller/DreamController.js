@@ -94,4 +94,32 @@ module.exports = {
       res.status(500).json(new DreamServiceError(err.message));
     }
   },
+
+  getDreamSearchResult: async (req, res) => {
+    try {
+      const dreamService = new DreamService(req);
+
+      const response = await dreamService.getDreamSearchResult();
+
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json(new DreamServiceError(err.message));
+    }
+  },
+
+  getDreamSearchCount: async (req, res) => {
+    try {
+      const dreamService = new DreamService(req);
+
+      const response = await dreamService.getDreamSearchCount();
+
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json(new DreamServiceError(err.message));
+    }
+  },
 };
