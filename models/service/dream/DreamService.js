@@ -271,10 +271,64 @@ module.exports = class DreamService {
       if (!dream) {
         return new ResponseDto(404, '존재하지 않는 꿈 입니다.');
       }
-      dream.dataValues.id = String(dream.dataValues.id);
-      dream.dataValues.images = ['sample-image.png', 'sample-image.png'];
 
       return new ResponseDto(200, '꿈 결과 조회', { dream });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async getDreamSearchResult() {
+    try {
+      if (!this.query.word && !this.query.categories) {
+        return new ResponseDto(400, '검색어 또는 카테고리를 선택해주세요');
+      }
+
+      const word = this.query.word;
+      const categories = this.query.categories.split(',');
+
+      const categoryId = await dreamRepository.getDreamCategoryId(categories);
+
+      if (!categoryId.length) {
+        return new ResponseDto(400, '존재하지 않는 카테고리입니다.');
+      }
+
+      const dream = await dreamRepository.getDreamSearchResult(
+        word,
+        categoryId
+      );
+
+      return new ResponseDto(200, '꿈 검색 결과 조회', {
+        dream,
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async getDreamSearchCount() {
+    try {
+      if (!this.query.word && !this.query.categories) {
+        return new ResponseDto(400, '검색어 또는 카테고리를 선택해주세요');
+      }
+
+      const word = this.query.word;
+      const categories = this.query.categories.split(',');
+
+      const categoryId = await dreamRepository.getDreamCategoryId(categories);
+
+      if (!categoryId.length) {
+        return new ResponseDto(400, '존재하지 않는 카테고리입니다.');
+      }
+
+      const dream = await dreamRepository.getDreamSearchResult(
+        word,
+        categoryId
+      );
+
+      return new ResponseDto(200, '꿈 검색 결과 조회', {
+        count: dream.length,
+      });
     } catch (err) {
       throw err;
     }
