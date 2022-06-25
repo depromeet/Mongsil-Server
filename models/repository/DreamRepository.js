@@ -124,9 +124,7 @@ module.exports = {
         title: dream.title,
         description: dream.description,
         categories,
-        image: categories
-          .map((category) => config.dreamImage + category.image)
-          .slice(0, 2),
+        image: categories.map((category) => category.image).slice(0, 2),
       };
     } catch (err) {
       throw err;
