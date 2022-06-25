@@ -5,11 +5,19 @@ module.exports = {
     const cardInfo = await dreamCardRepository.findById(cardId);
     return cardInfo;
   },
-  save: async function (userId, title, description, categories, transaction) {
+  save: async function (
+    userId,
+    title,
+    description,
+    categories,
+    registerDate,
+    transaction
+  ) {
     const cardId = await dreamCardRepository.save(
       userId,
       title,
       description,
+      registerDate,
       transaction
     );
     for (let i = 0; i < categories.length; i++) {
@@ -26,6 +34,7 @@ module.exports = {
     title,
     description,
     categories,
+    registerDate,
     transaction
   ) {
     await dreamCardCategoryRepository.deleteByCardId(dreamCardId, transaction);
@@ -33,7 +42,7 @@ module.exports = {
       dreamCardId,
       title,
       description,
-      categories,
+      registerDate,
       transaction
     );
     for (let i = 0; i < categories.length; i++) {
