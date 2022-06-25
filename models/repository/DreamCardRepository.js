@@ -2,17 +2,31 @@ const { DreamCardCategory, Category, BigCategory } = require('../index');
 const Sequelize = require('../index');
 const Op = Sequelize.Op;
 module.exports = {
-  save: async function (userId, title, description, transaction) {
+  save: async function (userId, title, description, registerDate, transaction) {
     return await Sequelize.DreamCard.create(
-      { userId: userId, title: title, description: description },
+      {
+        userId: userId,
+        title: title,
+        description: description,
+        registerDate: registerDate,
+      },
       { transaction: transaction }
     );
   },
-  updateById: async function (cardId, title, description, transaction) {
+  updateById: async function (
+    cardId,
+    title,
+    description,
+    registerDate,
+    transaction
+  ) {
+    console.log(registerDate);
+
     await Sequelize.DreamCard.update(
       {
         title: title,
         description: description,
+        registerDate: registerDate,
       },
       { where: { id: cardId } },
       { transaction: transaction }
