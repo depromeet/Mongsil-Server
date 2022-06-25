@@ -93,11 +93,13 @@ module.exports = {
 
   findOneDreamById: async (id) => {
     try {
-      const query = `select dream.id as id, dream.title as title, dream.description as description, group_concat(category.name) as categories, group_concat(category.image) as image from dream
+      const query = `select dream.id as id, dream.title as title, dream.description as description, group_concat(concat_ws(':', category.id, big_category.name, category.name, category.image) separator '|') as categories, group_concat(category.image) as image from dream
       left join dream_category
       on dream_category.dream_id = dream.id
       left join category
       on category.id = dream_category.category_id
+      left join big_category
+      on big_category.id = category.big_category_id
       where dream.id = ${id}
       `;
 
@@ -106,12 +108,25 @@ module.exports = {
         raw: true,
       });
 
+      const categories = dream.categories.split('|').map((el) => {
+        const e = el.split(':');
+
+        return {
+          id: e[0],
+          parentsKeyword: e[1],
+          name: e[2],
+          image: config.dreamImage + e[3],
+        };
+      });
+
       return {
         id: String(dream.id),
         title: dream.title,
         description: dream.description,
-        categories: dream.categories.split(','),
-        image: dream.image.split(','),
+        categories,
+        image: categories
+          .map((category) => config.dreamImage + category.image)
+          .slice(0, 2),
       };
     } catch (err) {
       throw err;
