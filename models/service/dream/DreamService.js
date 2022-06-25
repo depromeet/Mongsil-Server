@@ -289,7 +289,7 @@ module.exports = class DreamService {
 
       const categoryId = await dreamRepository.getDreamCategoryId(categories);
 
-      if (!categoryId.length) {
+      if (!categoryId.length && this.query.categories) {
         return new ResponseDto(400, '존재하지 않는 카테고리입니다.');
       }
 
@@ -317,7 +317,7 @@ module.exports = class DreamService {
 
       const categoryId = await dreamRepository.getDreamCategoryId(categories);
 
-      if (!categoryId.length) {
+      if (!categoryId.length && this.query.categories) {
         return new ResponseDto(400, '존재하지 않는 카테고리입니다.');
       }
 
