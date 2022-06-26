@@ -67,7 +67,7 @@ module.exports = class DreamService {
             id: String(el.id),
             name: el.name,
             image: config.categoryIcon + el.dataValues.bigImage,
-            categories: el.categories.map((category) => {
+            categories1: el.categories.map((category) => {
               return {
                 id: String(category.id),
                 parentsKeyword: el.name,
@@ -284,10 +284,17 @@ module.exports = class DreamService {
         return new ResponseDto(400, '검색어 또는 카테고리를 선택해주세요');
       }
 
-      const word = this.query.word;
       const categories = this.query.categories.split(',');
+      let word = this.query.word;
+
+      const wordToCategory = await dreamRepository.getDreamCategoryId([word]);
 
       const categoryId = await dreamRepository.getDreamCategoryId(categories);
+
+      if (wordToCategory.length) {
+        categoryId.push(wordToCategory[0]);
+        word = '';
+      }
 
       if (!categoryId.length && this.query.categories) {
         return new ResponseDto(400, '존재하지 않는 카테고리입니다.');
@@ -312,10 +319,17 @@ module.exports = class DreamService {
         return new ResponseDto(400, '검색어 또는 카테고리를 선택해주세요');
       }
 
-      const word = this.query.word;
       const categories = this.query.categories.split(',');
+      let word = this.query.word;
+
+      const wordToCategory = await dreamRepository.getDreamCategoryId([word]);
 
       const categoryId = await dreamRepository.getDreamCategoryId(categories);
+
+      if (wordToCategory.length) {
+        categoryId.push(wordToCategory[0]);
+        word = '';
+      }
 
       if (!categoryId.length && this.query.categories) {
         return new ResponseDto(400, '존재하지 않는 카테고리입니다.');
