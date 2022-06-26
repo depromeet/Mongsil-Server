@@ -67,7 +67,7 @@ module.exports = class DreamService {
             id: String(el.id),
             name: el.name,
             image: config.categoryIcon + el.dataValues.bigImage,
-            categories1: el.categories.map((category) => {
+            categories: el.categories.map((category) => {
               return {
                 id: String(category.id),
                 parentsKeyword: el.name,
