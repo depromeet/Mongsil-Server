@@ -225,10 +225,10 @@ module.exports = {
     let categoryWhereQuery = '';
     try {
       if (categories && categories.length) {
-        categoryWhereQuery = `and dream_category.dream_id in (select dream_id from dream_category where category_id in (${categories}))`;
+        categoryWhereQuery = `and dream_category.dream_id in (select dream_id from dream_category where category_id in (${categories.pop()}))`;
       }
 
-      const query = `select dream.id, dream.title, group_concat(distinct category.image SEPARATOR '|') as image, group_concat(distinct category.name SEPARATOR '|') name from dream
+      const query = `select dream.id, dream.title, group_concat(distinct category.image SEPARATOR '|') as image, group_concat(distinct category.name SEPARATOR '|') name, group_concat(distinct category.id SEPARATOR '|') category from dream
         left join dream_category
         on dream_category.dream_id = dream.id
         left join category
@@ -240,12 +240,23 @@ module.exports = {
         group by dream.id
         ORDER BY id ASC`;
 
-      const dream = await Sequelize.sequelize.query(query, {
+      let dream = await Sequelize.sequelize.query(query, {
         replacements: {
           searchText: `%${word.replace(/ /gi, '%')}%`,
         },
         type: QueryTypes.SELECT,
         raw: true,
+      });
+
+      dream = dream.filter((el) => {
+        const name = el.category.split('|');
+        let cnt = 0;
+
+        for (let i = 0; i < categories.length; i += 1) {
+          if (name.includes(String(categories[i]))) cnt += 1;
+        }
+
+        return cnt === categories.length;
       });
 
       return dream.map((el) => {
