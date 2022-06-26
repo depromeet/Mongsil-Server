@@ -117,8 +117,12 @@ module.exports = {
         raw: true,
       });
 
+      const keywords = [];
+
       const categories = dream.categories.split('|').map((el) => {
         const e = el.split(':');
+
+        keywords.push(e[0]);
 
         return {
           id: e[0],
@@ -127,6 +131,17 @@ module.exports = {
           image: config.dreamImage + e[3],
         };
       });
+
+      await Sequelize.Category.increment(
+        { hit: 1 },
+        {
+          where: {
+            id: {
+              [Op.or]: keywords,
+            },
+          },
+        }
+      );
 
       return {
         id: String(dream.id),
