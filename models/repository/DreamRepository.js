@@ -15,14 +15,23 @@ module.exports = {
             [Op.ne]: '동사/형용사',
           },
         },
+        order: [['name', 'asc']],
         include: [
           {
             model: Sequelize.Category,
             attributes: ['id', 'name', ['image', 'smallImage']],
           },
         ],
+        type: QueryTypes.SELECT,
       });
 
+      let idx;
+
+      noun.forEach((el, i) => {
+        if (el.name === '기타') idx = i;
+      });
+
+      noun.push(...noun.splice(idx, 1));
       return noun;
     } catch (err) {
       throw err;
