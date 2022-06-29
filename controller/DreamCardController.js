@@ -24,13 +24,14 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const { userId, title, description, categories, registerDate } = req.body;
+      const { userId, title, description } = req.body;
+      const categories =
+        req.body.categories.length == 0 ? [232] : req.body.categories;
       const cardId = await dreamCardService.save(
         userId,
         title,
         description,
-        categories,
-        registerDate
+        categories
       );
       await transaction.commit();
 
@@ -48,15 +49,8 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const { cardId, title, description, categories, registerDate } = req.body;
-      await dreamCardService.update(
-        cardId,
-        title,
-        description,
-        categories,
-        registerDate,
-        transaction
-      );
+      const { cardId, title, description, categories } = req.body;
+      await dreamCardService.update(cardId, title, description, categories);
       await transaction.commit();
 
       res.status(200).send(new ResponseDto(200, '수정 완료'));
