@@ -20,6 +20,11 @@ module.exports = {
           {
             model: Sequelize.Category,
             attributes: ['id', 'name', ['image', 'smallImage']],
+            where: {
+              id: {
+                [Op.ne]: 232,
+              },
+            },
           },
         ],
         type: QueryTypes.SELECT,
@@ -219,7 +224,7 @@ module.exports = {
       let categoryQuery = '';
 
       if (categories && categories.length) {
-        categoryQuery = `where name in (:category)`;
+        categoryQuery = `where name in (:category) and id != 232`;
       }
 
       const query = `select id from category ${categoryQuery}`;
