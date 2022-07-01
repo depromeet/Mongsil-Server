@@ -51,8 +51,15 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const { cardId, title, description, categories } = req.body;
-      await dreamCardService.update(cardId, title, description, categories);
+      const { cardId, title, description, categories, registerDate } = req.body;
+      await dreamCardService.update(
+        cardId,
+        title,
+        description,
+        categories,
+        registerDate,
+        transaction
+      );
       await transaction.commit();
 
       res.status(200).send(new ResponseDto(200, '수정 완료'));
