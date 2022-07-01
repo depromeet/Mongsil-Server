@@ -13,7 +13,7 @@ module.exports = {
 
       res
         .status(200)
-        .send(new ResponseDto(200, '저장 완료', new DreamCardDto(cardInfo)));
+        .send(new ResponseDto(200, 'success', new DreamCardDto(cardInfo)));
     } catch (err) {
       console.log(err);
       res.status(403).send(new DreamCardServiceError(err.message));
@@ -24,14 +24,16 @@ module.exports = {
     try {
       transaction = await sequelize.transaction();
 
-      const { userId, title, description } = req.body;
+      const { userId, title, description, registerDate } = req.body;
       const categories =
         req.body.categories.length == 0 ? [232] : req.body.categories;
       const cardId = await dreamCardService.save(
         userId,
         title,
         description,
-        categories
+        categories,
+        registerDate,
+        transaction
       );
       await transaction.commit();
 
